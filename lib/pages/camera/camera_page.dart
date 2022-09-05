@@ -11,13 +11,6 @@ import '../../utils/isolate_utils.dart';
 import 'widget/model_camera_preview.dart';
 
 class CameraPage extends StatefulWidget {
-  const CameraPage({
-    required this.index,
-    Key? key,
-  }) : super(key: key);
-
-  final int index;
-
   @override
   _CameraPageState createState() => _CameraPageState();
 }
@@ -113,7 +106,6 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         appBar: _buildAppBar,
         body: ModelCameraPreview(
           cameraController: _cameraController,
-          index: widget.index,
           draw: _draw,
         ),
         floatingActionButton: _buildFloatingActionButton,
@@ -124,7 +116,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
 
   AppBar get _buildAppBar => AppBar(
         title: Text(
-          models[widget.index]['title']!,
+          model['title']!,
           style: TextStyle(
               color: Colors.white,
               fontSize: ScreenUtil().setSp(28),

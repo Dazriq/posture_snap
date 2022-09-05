@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../services/model_inference_service.dart';
 import '../../constants/data.dart';
-import 'widgets/model_card.dart';
-import '../camera/camera_page.dart';
+ import '../camera/camera_page.dart';
 import '../../../services/service_locator.dart';
 
 class HomePage extends StatefulWidget {
@@ -48,41 +47,11 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(
         builder: (context) {
-          return CameraPage(index: 0);
+          return CameraPage();
         },
       ),
     );
   }
 }
 
-class _ModelPreview extends StatelessWidget {
-  const _ModelPreview({
-    Key? key,
-    required this.pageController,
-    required this.currentPageValue,
-  }) : super(key: key);
 
-  final PageController pageController;
-  final double currentPageValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: ScreenUtil().setHeight(450.0),
-        child: PageView.builder(
-          controller: pageController,
-          physics: const BouncingScrollPhysics(),
-          itemCount: models.length,
-          itemBuilder: (context, index) {
-            var scale = (currentPageValue - index).abs();
-            return ModelCard(
-              index: index,
-              scale: scale,
-            );
-          },
-        ),
-      ),
-    );
-  }
-}

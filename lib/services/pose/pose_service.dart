@@ -94,6 +94,7 @@ class Pose extends AiModel {
     }
 
     final landmarkPoints = outputLandmarks.getDoubleList().reshape([39, 5]);
+    print(landmarkPoints);
     final landmarkResults = <Offset>[];
 
     for (var point in landmarkPoints) {
@@ -113,6 +114,7 @@ Map<String, dynamic>? runPoseEstimator(Map<String, dynamic> params) {
 
   final image = ImageUtils.convertCameraImage(params['cameraImage']);
   final result = pose.predict(image!);
+  print(result);
 
   return result;
 }

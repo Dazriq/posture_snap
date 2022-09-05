@@ -11,13 +11,11 @@ import 'pose_painter.dart';
 class ModelCameraPreview extends StatelessWidget {
   ModelCameraPreview({
     required this.cameraController,
-    required this.index,
     required this.draw,
     Key? key,
   }) : super(key: key);
 
   final CameraController? cameraController;
-  final int index;
   final bool draw;
 
   late final double _ratio;
@@ -44,7 +42,7 @@ class ModelCameraPreview extends StatelessWidget {
         Visibility(
           visible: draw,
           child: IndexedStack(
-            index: index,
+            index: 3,
             children: [
               _drawBoundingBox,
               _drawLandmarks,
