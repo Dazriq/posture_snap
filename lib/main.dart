@@ -1,38 +1,87 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'pages/home/home_page.dart';
-import 'services/service_locator.dart';
+import 'vision_detector_views/pose_detector_view.dart';
 
-void main() {
+List<CameraDescription> cameras = [];
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
+
+  cameras = await availableCameras();
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context , child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter with Mediapipe',
-          // You can use the library anywhere in the app even in theme
-          theme: ThemeData(
-                appBarTheme: const AppBarTheme(
-                  elevation: 0.0,
-                  color: Colors.transparent,
-                ),
-              ),
-          home: const HomePage(),
-        );
-      },
-      );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Home(),
+    );
   }
 }
 
+class Home extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Google ML Kit Demo App'),
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  CustomCard('Pose Detection', PoseDetectorView()),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
+class CustomCard extends StatelessWidget {
+  final String _label;
+  final Widget _viewPage;
+  final bool featureCompleted;
+
+  const CustomCard(this._label, this._viewPage, {this.featureCompleted = true});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5,
+      margin: EdgeInsets.only(bottom: 10),
+      child: ListTile(
+        tileColor: Theme.of(context).primaryColor,
+        title: Text(
+          _label,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        onTap: () {
+          if (!featureCompleted) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content:
+                    const Text('This feature has not been implemented yet')));
+          } else {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => _viewPage));
+          }
+        },
+      ),
+    );
+  }
+}
