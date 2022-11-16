@@ -19,10 +19,24 @@ class Joint {
 }
 
 
-double calculateAngle2d(PoseLandmark jointA, PoseLandmark jointB, PoseLandmark jointC) {
+double calculateAngle2d(PoseLandmark jointA, PoseLandmark jointB, PoseLandmark jointC, String view) {
   Point pointA = new Point(jointA.x, jointA.y);
   Point pointB = new Point(jointB.x, jointB.y);
   Point pointC = new Point(jointC.x, jointC.y);
+  
+  if (view == 'front') {
+    double radians = atan2(pointC.y - pointB.y, pointC.x - pointB.x) - atan2(pointA.y - pointB.y, pointA.x - pointB.x);
+    double angle = (radians * 180.0/pi).abs();    
+  }
+  else if (view == 'above') {
+    
+  }
+  else if (view == 'side') {
+    
+  }
+  else {
+    return 0;
+  }
 
   double radians = atan2(pointC.y - pointB.y, pointC.x - pointB.x) - atan2(pointA.y - pointB.y, pointA.x - pointB.x);
   double angle = (radians * 180.0/pi).abs();

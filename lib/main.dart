@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:ergo_snap/Screens/home.dart';
 import 'package:flutter/material.dart';
 import 'vision_detector_views/pose_detector_view.dart';
 
@@ -14,7 +15,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Home() //Home(),
+    return MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreen() //Home(),
         );
   }
 }
@@ -68,8 +69,7 @@ class CustomCard extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => _viewPage));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => _viewPage));
         },
       ),
     );

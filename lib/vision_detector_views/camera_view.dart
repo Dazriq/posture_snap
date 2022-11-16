@@ -64,30 +64,24 @@ class _CameraViewState extends State<CameraView> {
         ),
       );
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: _body(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
-
   Widget _body() {
     Widget body;
-      body = _galleryBody();
+    body = _galleryBody();
     return body;
   }
 
   Widget _galleryBody() {
-    return ListView(shrinkWrap: true, children: [
+    return ListView(children: [
       _image != null
           ? SizedBox(
               height: 400,
@@ -104,18 +98,44 @@ class _CameraViewState extends State<CameraView> {
               Icons.image,
               size: 200,
             ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ElevatedButton(
-          child: Text('From Gallery'),
-          onPressed: () => _getImage(ImageSource.gallery),
+      InkWell(
+        onTap: () => _getImage(ImageSource.camera),
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.5,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+              color: Color(0xFF0E3311).withOpacity(0)),
+          padding: EdgeInsets.symmetric(vertical: 20),
+          alignment: Alignment.center,
+          child: Text(
+            'TAKE A PICTURE',
+            style: TextStyle(
+                color: Color(0XFFFF3B9D),
+                fontSize: 30,
+                fontWeight: FontWeight.bold),
+          ),
         ),
       ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ElevatedButton(
-          child: Text('Take a picture'),
-          onPressed: () => _getImage(ImageSource.camera),
+      InkWell(
+        onTap: () => _getImage(ImageSource.gallery),
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          width: 300,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+              color: Color(0xFF0E3311).withOpacity(0)),
+          padding: EdgeInsets.symmetric(vertical: 20),
+          alignment: Alignment.center,
+          child: Text(
+            'FROM GALLERY',
+            style: TextStyle(
+                color: Color(0XFFFF3B9D),
+                fontSize: 30,
+                fontWeight: FontWeight.bold),
+          ),
         ),
       ),
       if (_image != null)
@@ -123,7 +143,7 @@ class _CameraViewState extends State<CameraView> {
           padding: const EdgeInsets.all(16.0),
           child: Text(
               '${_path == null ? '' : 'Working...'}\n\n${widget.text ?? ''}'),
-              //path of image = _path
+          //path of image = _path
         ),
     ]);
   }
@@ -139,7 +159,6 @@ class _CameraViewState extends State<CameraView> {
     }
     setState(() {});
   }
-
 
   Future _processPickedFile(XFile? pickedFile) async {
     final path = pickedFile?.path;

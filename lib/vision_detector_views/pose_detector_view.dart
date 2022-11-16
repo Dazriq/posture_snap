@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit_example/rula/rulaCalculator.dart';
+import 'package:ergo_snap/rula/rulaCalculator.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 import 'camera_view.dart';
@@ -54,8 +54,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           inputImage.inputImageData!.imageRotation);
       _customPaint = CustomPaint(painter: painter);
     } else {
-      _text = 'Poses found: ${poses.length}\n\n';
-      calculateRula(poses);
+      _text = 'Poses found ${calculateRula(poses)}';
 
 
       // TODO: set _customPaint to draw landmarks on top of image
