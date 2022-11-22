@@ -5,7 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ergo_snap/components/rounded_button.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+import '../Screens/components/camera_carousel.dart';
 import '../main.dart';
 
 enum ScreenMode { liveFeed, gallery }
@@ -81,71 +84,206 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget _galleryBody() {
-    return ListView(children: [
-      _image != null
-          ? SizedBox(
-              height: 400,
-              width: 400,
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Image.file(_image!),
-                  if (widget.customPaint != null) widget.customPaint!,
-                ],
-              ),
-            )
-          : Icon(
-              Icons.image,
-              size: 200,
+    return Container(
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          width: MediaQuery.of(context).size.width * 1,
+          height: MediaQuery.of(context).size.height * 1,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 30),
+
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Stack(
+                      alignment: Alignment.topLeft,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.arrow_back),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ],
+                    )),
+                SizedBox(height: 10),
+                Text(
+                  'POSTURE\nSNAP',
+                  style: GoogleFonts.atma(
+                    textStyle: TextStyle(
+                      color: Color(0XFFFF3B9D),
+                      fontSize: 70,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
+                    )
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 10),
+                _image != null
+                    ? SizedBox(
+                        height: 400,
+                        width: 400,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: <Widget>[
+                            Image.file(_image!),
+                            if (widget.customPaint != null) widget.customPaint!,
+                          ],
+                        ),
+                      )
+                    : CameraCarousel(),
+                SizedBox(height: 10),
+                //  _image != null
+                //      ? SizedBox(height: 0)
+                //      : roundedButtonFull('TAKE A PICTURE'),
+                // SizedBox(height: 20),
+                //  _image != null
+                //      ? SizedBox(height: 0)
+                //      : roundedButtonFull('FROM GALLERY'),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: 100,
+                  color: Colors.red.withOpacity(0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      squareIconButton('camera'), 
+                      squareIconButton('gallery')
+                    ],
+                  ),
+                ),
+                if (_image != null)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                        '${_path == null ? '' : 'Working...'}\n\n${widget.text ?? ''}'),
+                    //path of image = _path
+                  ),
+                SizedBox(height: 30),
+              ],
             ),
-      InkWell(
-        onTap: () => _getImage(ImageSource.camera),
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.5,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-              color: Color(0xFF0E3311).withOpacity(0)),
-          padding: EdgeInsets.symmetric(vertical: 20),
-          alignment: Alignment.center,
-          child: Text(
-            'TAKE A PICTURE',
-            style: TextStyle(
-                color: Color(0XFFFF3B9D),
-                fontSize: 30,
-                fontWeight: FontWeight.bold),
           ),
         ),
       ),
-      InkWell(
-        onTap: () => _getImage(ImageSource.gallery),
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          width: 300,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-              color: Color(0xFF0E3311).withOpacity(0)),
-          padding: EdgeInsets.symmetric(vertical: 20),
-          alignment: Alignment.center,
-          child: Text(
-            'FROM GALLERY',
-            style: TextStyle(
-                color: Color(0XFFFF3B9D),
-                fontSize: 30,
-                fontWeight: FontWeight.bold),
-          ),
+    );
+  }
+
+  Widget squareIconButton(String title) {
+    if (title == 'camera') {
+      return InkWell(
+          onTap: () => {
+                {_getImage(ImageSource.camera)}
+              },
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.35,
+            height: 150,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                //border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+                color: Color(0XFFFF3B9D).withOpacity(1)),
+            child: Icon(
+              Icons.photo_camera_outlined,
+              size: 60,
+              color: Colors.white,
+            ),
+          ));
+    } else {
+      return InkWell(
+          onTap: () => {
+                {_getImage(ImageSource.gallery)}
+              },
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.35,
+            height: 150,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+                color: Color(0xFF0E3311).withOpacity(0)),
+            child: Icon(
+              Icons.photo_outlined,
+              size: 60,
+              color: Color(0XFFFF3B9D),
+            ),
+          ));
+    }
+  }
+
+  Widget roundedIconButton() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
+      height: 100,
+      color: Colors.red.withOpacity(0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          InkWell(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.35,
+                height: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    //border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+                    color: Color(0XFFFF3B9D).withOpacity(1)),
+                child: Icon(
+                  Icons.photo_camera_outlined,
+                  size: 60,
+                  color: Colors.white,
+                ),
+              )),
+          InkWell(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.35,
+                height: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+                    color: Color(0xFF0E3311).withOpacity(0)),
+                child: Icon(
+                  Icons.photo_outlined,
+                  size: 60,
+                  color: Color(0XFFFF3B9D),
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+
+  Widget roundedButtonFull(String title) {
+    return InkWell(
+      onTap: () => {
+        if (title == 'TAKE A PICTURE')
+          {_getImage(ImageSource.camera)}
+        else
+          {_getImage(ImageSource.gallery)}
+      },
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+            color: Color(0XFFFF3B9D).withOpacity(0)),
+        padding: EdgeInsets.symmetric(vertical: 20),
+        alignment: Alignment.center,
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Color(0XFFFF3B9D),
+              fontSize: 30,
+              fontWeight: FontWeight.bold),
         ),
       ),
-      if (_image != null)
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-              '${_path == null ? '' : 'Working...'}\n\n${widget.text ?? ''}'),
-          //path of image = _path
-        ),
-    ]);
+    );
   }
 
   Future _getImage(ImageSource source) async {

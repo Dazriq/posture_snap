@@ -27,35 +27,38 @@ class HomeComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
 
               children: [
-                Padding(padding: EdgeInsets.only(top: 90)
-                ), 
+                SizedBox(height: 90),
                 Text(
-                  'Ergo Snap',
-                  style: GoogleFonts.pacifico(
+                  'POSTURE\nSNAP',
+                  style: GoogleFonts.atma(
                     textStyle: TextStyle(
                       color: Color(0XFFFF3B9D),
-                      fontSize: 70, 
+                      fontSize: 70,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
                     )
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 
-                SizedBox(height: 30),
+                SizedBox(height: 10),
 
-                SvgPicture.asset('assets/images/login.svg'),
+                //SvgPicture.asset('assets/images/home.svg'),
+                Image.asset('assets/images/imgHomeEdited.png'),
 
-                SizedBox(height: 30),
+                SizedBox(height: 40),
 
-                RoundedButton(title: 'ASSESS'),
+                RoundedButton(title: 'ASSESS', colorCode: 0XFF0D6EFD),
                 
-                SizedBox(height: 30),
+                SizedBox(height: 20),
 
-                RoundedButton(title: 'ABOUT'),
+                RoundedButton(title: 'LEARN', colorCode: 0XFF0D6EFD),
 
-                SizedBox(height: 30),
+                SizedBox(height: 20),
 
-                RoundedButton(title: 'DONATE'),
+                RoundedButton(title: 'ABOUT', colorCode: 0XFF0D6EFD),
 
-                SizedBox(height: 30),
+                SizedBox(height: 20),
 
               ],
             ),

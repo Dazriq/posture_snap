@@ -6,12 +6,16 @@ import 'package:ergo_snap/vision_detector_views/camera_view.dart';
 
 import 'package:camera/camera.dart';
 import 'package:ergo_snap/Screens/home.dart';
+import 'package:ergo_snap/Screens/learn.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RoundedButton extends StatelessWidget {
-  const RoundedButton({Key? key, required this.title}) : super(key: key);
+  const RoundedButton({Key? key, required this.title, required this.colorCode})
+      : super(key: key);
 
   final String title;
+  final int colorCode;
 
   @override
   Widget build(BuildContext context) {
@@ -36,27 +40,93 @@ class RoundedButton extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => HomeScreen(),
+                builder: (context) => LearnScreen(),
                 //TODO: login g
               ));
         }
       },
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        width: size.width * 0.8,
+        width: size.width * 0.75,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: Color(0XFF0D6EFD), width: 2),
-            color: Color(0xFF0E3311).withOpacity(0)),
-        padding: EdgeInsets.symmetric(vertical: 20),
+            border: Border.all(color: Color(colorCode), width: 2),
+            color: Color(colorCode).withOpacity(0)),
+        padding: EdgeInsets.symmetric(vertical: 15),
         alignment: Alignment.center,
-        child: Text(
-          title,
-          style: TextStyle(
-              color: Color(0XFF0D6EFD),
-              fontSize: 20,
-              fontWeight: FontWeight.bold),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+                        if (title == 'ASSESS') ...[
+              Icon(
+                Icons.straighten,
+                size: 30,
+                color: Color(colorCode),
+              ),
+            ] else if (title == 'LEARN') ...[
+              Icon(
+                Icons.school_outlined,
+                size: 30,
+                color: Color(colorCode),
+              ),
+            ] else ...[
+              Icon(
+                Icons.article_outlined,
+                size: 30,
+                color: Color(colorCode),
+              ),
+            ],
+            SizedBox(width: 10,),
+            Text(
+              title,
+              style: GoogleFonts.cairo(
+                  textStyle: TextStyle(
+                color: Color(colorCode),
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              )),
+            ),
+            SizedBox(width: 10,),
+          ],
         ),
+        // child: RichText(
+        //   text: TextSpan(
+        //     children: <InlineSpan>[
+        //       TextSpan(
+        //         text: title,
+        //         style: GoogleFonts.cairo(
+        //           textStyle: TextStyle(
+        //             color: Color(colorCode),
+        //             fontSize: 22,
+        //             fontWeight: FontWeight.bold,
+        //           )
+        //         ),
+        //       //   style: TextStyle(
+        //       // color: Color(colorCode),
+        //       // fontSize: 23,
+        //       // fontWeight: FontWeight.bold),
+        //       ),
+        //       //                 TextSpan(
+        //       //   text: '  ',
+        //       //   style: TextStyle(
+        //       // color: Color(colorCode),
+        //       // fontSize: 23,
+        //       // fontWeight: FontWeight.bold),
+        //       // ),
+        //       WidgetSpan(
+        //         alignment: PlaceholderAlignment.middle,
+        //         child: Icon(Icons.school, size: 30, color: Color(0XFFFF3B9D),),
+        //       ),
+        //     ],
+        //   ),
+        // )
+        // Text(
+        //   title,
+        //   style: TextStyle(
+        //       color: Color(colorCode),
+        //       fontSize: 23,
+        //       fontWeight: FontWeight.bold),
+        // ),
       ),
     );
   }

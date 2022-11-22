@@ -7,8 +7,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   bool isLogin = true;
   late Animation<double> containerSize;
   AnimationController? animationController;
@@ -17,7 +17,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(vsync: this, duration: animationDuration);
+    animationController =
+        AnimationController(vsync: this, duration: animationDuration);
   }
 
   @override
@@ -34,33 +35,63 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return Scaffold(
       body: Stack(
         children: [
-                    Positioned(
-            top: 100,
-            right: -50,
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(color: Color(0XFF0D6EFD), width: 2),
-                color: Colors.white
-              ),
-            )
-          ),
-
           Positioned(
-            top: -50,
-            left: -50,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(color: Color(0XFF0D6EFD), width: 2),
-                color: Colors.white
-              ),
-            )
-          ),
+              top: -125,
+              left: -100,
+              child: Container(
+                width: 500,
+                height: 500,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(250),
+                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+                    color: Colors.white.withOpacity(1)),
+              )),
+              Positioned(
+              top: -125,
+              right: -100,
+              child: Container(
+                width: 500,
+                height: 500,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(250),
+                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+                    color: Colors.white.withOpacity(0)),
+              )),
+                            Positioned(
+              top: -125,
+              right: -75,
+              child: Container(
+                width: 500,
+                height: 500,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(250),
+                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+                    color: Colors.white.withOpacity(0)),
+              )),
+              Positioned(
+              top: -125,
+              left: -75,
+              child: Container(
+                width: 500,
+                height: 500,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(250),
+                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+                    color: Colors.white.withOpacity(0)),
+              )),
+              
+
+          // Positioned(
+          //     top: -50,
+          //     left: -50,
+          //     child: Container(
+          //       width: 200,
+          //       height: 200,
+          //       decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(100),
+          //           border: Border.all(color: Color(0XFF0D6EFD), width: 2),
+          //           color: Colors.white),
+          //     )),
           // Login Form
           HomeComponent(size: size, defaultLoginSize: defaultLoginSize),
         ],
