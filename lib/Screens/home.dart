@@ -36,50 +36,65 @@ class _HomeScreenState extends State<HomeScreen>
       body: Stack(
         children: [
           Positioned(
-              top: -125,
-              left: -100,
-              child: Container(
-                width: 500,
-                height: 500,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(250),
-                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-                    color: Colors.white.withOpacity(1)),
-              )),
-              Positioned(
-              top: -125,
-              right: -100,
-              child: Container(
-                width: 500,
-                height: 500,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(250),
-                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-                    color: Colors.white.withOpacity(0)),
-              )),
-                            Positioned(
-              top: -125,
-              right: -75,
-              child: Container(
-                width: 500,
-                height: 500,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(250),
-                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-                    color: Colors.white.withOpacity(0)),
-              )),
-              Positioned(
-              top: -125,
-              left: -75,
-              child: Container(
-                width: 500,
-                height: 500,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(250),
-                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-                    color: Colors.white.withOpacity(0)),
-              )),
-              
+              child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.45,
+            child: const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Color(0XFFFF3B9D), Color(0XFFa25ce0)],
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    stops: [0.3, 0.7],
+                    ),
+              ),
+              //const BoxDecoration(color: Color(0XFFFF3B9D))
+            ),
+          )),
+          // Positioned(
+          //     top: -125,
+          //     left: -100,
+          //     child: Container(
+          //       width: 500,
+          //       height: 500,
+          //       decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(250),
+          //           border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+          //           color: Colors.white.withOpacity(0)),
+          //     )),
+          //     Positioned(
+          //     top: -125,
+          //     right: -100,
+          //     child: Container(
+          //       width: 500,
+          //       height: 500,
+          //       decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(250),
+          //           border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+          //           color: Colors.white.withOpacity(0)),
+          //     )),
+          //                   Positioned(
+          //     top: -125,
+          //     right: -75,
+          //     child: Container(
+          //       width: 500,
+          //       height: 500,
+          //       decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(250),
+          //           border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+          //           color: Colors.white.withOpacity(0)),
+          //     )),
+          //     Positioned(
+          //     top: -125,
+          //     left: -75,
+          //     child: Container(
+          //       width: 500,
+          //       height: 500,
+          //       decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(250),
+          //           border: Border.all(color: Color(0XFFFF3B9D), width: 2),
+          //           color: Colors.white.withOpacity(0)),
+          //     )),
 
           // Positioned(
           //     top: -50,

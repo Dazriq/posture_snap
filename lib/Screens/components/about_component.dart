@@ -44,10 +44,11 @@ class AboutComponent extends StatelessWidget {
                     )),
                 Text(
                   'What is Ergo Snap?',
-                  style: GoogleFonts.pacifico(
+                  style: GoogleFonts.atma(
                       textStyle: TextStyle(
                     color: Color(0XFFFF3B9D),
                     fontSize: 35,
+                    fontWeight: FontWeight.bold
                   )),
                 ),
                 Padding(padding: EdgeInsets.only(top: 20)),
@@ -60,22 +61,22 @@ class AboutComponent extends StatelessWidget {
                       children: <TextSpan>[
                         TextSpan(
                             text: 'A mobile application where ',
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.cairo(
                                 textStyle: TextStyle(
                                     color: Color(0XFF0D6EFD),
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold))),
                         TextSpan(
-                            text: 'YOU ',
-                            style: GoogleFonts.pacifico(
+                            text: ' YOU ',
+                            style: GoogleFonts.atma(
                                 textStyle: TextStyle(
                                     color: Color(0XFFFF3B9D),
-                                    fontSize: 15,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold))),
                         TextSpan(
                             text:
                                 'could evaluate your own ergonomics only by snapping picture!',
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.cairo(
                                 textStyle: TextStyle(
                                     color: Color(0XFF0D6EFD),
                                     fontSize: 20,
@@ -87,10 +88,11 @@ class AboutComponent extends StatelessWidget {
                 Padding(padding: EdgeInsets.only(top: 30)),
                 Text(
                   'How do I Ergo Snap?',
-                  style: GoogleFonts.pacifico(
+                  style: GoogleFonts.atma(
                       textStyle: TextStyle(
                     color: Color(0XFFFF3B9D),
                     fontSize: 35,
+                    fontWeight: FontWeight.bold,
                   )),
                 ),
                 Padding(padding: EdgeInsets.only(top: 20)),
@@ -103,7 +105,7 @@ class AboutComponent extends StatelessWidget {
                         TextSpan(
                             text:
                                 'You just press the button below, take a posture picture, then you\'re done! ',
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.cairo(
                                 textStyle: TextStyle(
                                     color: Color(0XFF0D6EFD),
                                     fontSize: 20,

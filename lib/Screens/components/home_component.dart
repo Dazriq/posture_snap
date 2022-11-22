@@ -32,7 +32,7 @@ class HomeComponent extends StatelessWidget {
                   'POSTURE\nSNAP',
                   style: GoogleFonts.atma(
                     textStyle: TextStyle(
-                      color: Color(0XFFFF3B9D),
+                      color: Colors.white,
                       fontSize: 70,
                       fontWeight: FontWeight.bold,
                       height: 1,
@@ -48,15 +48,15 @@ class HomeComponent extends StatelessWidget {
 
                 SizedBox(height: 40),
 
-                RoundedButton(title: 'ASSESS', colorCode: 0XFF0D6EFD),
+                RoundedButton(title: 'ASSESS', colorCode: 0XFF5BA3F8),
                 
                 SizedBox(height: 20),
 
-                RoundedButton(title: 'LEARN', colorCode: 0XFF0D6EFD),
+                RoundedButton(title: 'LEARN', colorCode: 0XFF5BA3F8),
 
                 SizedBox(height: 20),
 
-                RoundedButton(title: 'ABOUT', colorCode: 0XFF0D6EFD),
+                RoundedButton(title: 'ABOUT', colorCode: 0XFF5BA3F8),
 
                 SizedBox(height: 20),
 

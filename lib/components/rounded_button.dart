@@ -47,11 +47,11 @@ class RoundedButton extends StatelessWidget {
       },
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        width: size.width * 0.75,
+        width: size.width * 0.8,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             border: Border.all(color: Color(colorCode), width: 2),
-            color: Color(colorCode).withOpacity(0)),
+            color: Color(colorCode).withOpacity(1)),
         padding: EdgeInsets.symmetric(vertical: 15),
         alignment: Alignment.center,
         child: Row(
@@ -61,19 +61,19 @@ class RoundedButton extends StatelessWidget {
               Icon(
                 Icons.straighten,
                 size: 30,
-                color: Color(colorCode),
+                color: Colors.white,
               ),
             ] else if (title == 'LEARN') ...[
               Icon(
                 Icons.school_outlined,
                 size: 30,
-                color: Color(colorCode),
+                color: Colors.white,
               ),
             ] else ...[
               Icon(
                 Icons.article_outlined,
                 size: 30,
-                color: Color(colorCode),
+                color: Colors.white,
               ),
             ],
             SizedBox(width: 10,),
@@ -81,7 +81,7 @@ class RoundedButton extends StatelessWidget {
               title,
               style: GoogleFonts.cairo(
                   textStyle: TextStyle(
-                color: Color(colorCode),
+                color: Colors.white,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               )),
