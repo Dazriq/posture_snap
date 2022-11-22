@@ -79,11 +79,18 @@ class _CameraViewState extends State<CameraView> {
 
   Widget _body() {
     Widget body;
-    body = _galleryBody();
+    body = cameraViewBody();
     return body;
   }
 
-  Widget _galleryBody() {
+  Widget cameraViewBody() {
+    final Shader _linearGradient = const LinearGradient(
+      colors: [Color(0XFFFF3B9D), Color(0XFFa25ce0)],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+      stops: [0.3, 0.7],
+    ).createShader(const Rect.fromLTWH(0.0, 0.0, 320.0, 80.0));
+
     return Container(
       child: Align(
         alignment: Alignment.center,
@@ -114,13 +121,12 @@ class _CameraViewState extends State<CameraView> {
                 Text(
                   'POSTURE\nSNAP',
                   style: GoogleFonts.atma(
-                    textStyle: TextStyle(
-                      color: Color(0XFFFF3B9D),
-                      fontSize: 70,
-                      fontWeight: FontWeight.bold,
-                      height: 1,
-                    )
-                  ),
+                      textStyle: TextStyle(
+                    fontSize: 70,
+                    fontWeight: FontWeight.bold,
+                    height: 1,
+                    foreground: Paint()..shader = _linearGradient,
+                  )),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
@@ -152,7 +158,7 @@ class _CameraViewState extends State<CameraView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      squareIconButton('camera'), 
+                      squareIconButton('camera'),
                       squareIconButton('gallery')
                     ],
                   ),
@@ -213,77 +219,6 @@ class _CameraViewState extends State<CameraView> {
             ),
           ));
     }
-  }
-
-  Widget roundedIconButton() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.8,
-      height: 100,
-      color: Colors.red.withOpacity(0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          InkWell(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.35,
-                height: 150,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    //border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-                    color: Color(0XFFFF3B9D).withOpacity(1)),
-                child: Icon(
-                  Icons.photo_camera_outlined,
-                  size: 60,
-                  color: Colors.white,
-                ),
-              )),
-          InkWell(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.35,
-                height: 150,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-                    color: Color(0xFF0E3311).withOpacity(0)),
-                child: Icon(
-                  Icons.photo_outlined,
-                  size: 60,
-                  color: Color(0XFFFF3B9D),
-                ),
-              )),
-        ],
-      ),
-    );
-  }
-
-  Widget roundedButtonFull(String title) {
-    return InkWell(
-      onTap: () => {
-        if (title == 'TAKE A PICTURE')
-          {_getImage(ImageSource.camera)}
-        else
-          {_getImage(ImageSource.gallery)}
-      },
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-            color: Color(0XFFFF3B9D).withOpacity(0)),
-        padding: EdgeInsets.symmetric(vertical: 20),
-        alignment: Alignment.center,
-        child: Text(
-          title,
-          style: TextStyle(
-              color: Color(0XFFFF3B9D),
-              fontSize: 30,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
   }
 
   Future _getImage(ImageSource source) async {

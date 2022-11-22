@@ -48,15 +48,15 @@ class HomeComponent extends StatelessWidget {
 
                 SizedBox(height: 40),
 
-                RoundedButton(title: 'ASSESS', colorCode: 0XFF5BA3F8),
+                RoundedButton(title: 'ASSESS', colorCode: 0XFFFF3B9D),
                 
                 SizedBox(height: 20),
 
-                RoundedButton(title: 'LEARN', colorCode: 0XFF5BA3F8),
+                RoundedButton(title: 'LEARN', colorCode: 0XFFFF3B9D),
 
                 SizedBox(height: 20),
 
-                RoundedButton(title: 'ABOUT', colorCode: 0XFF5BA3F8),
+                RoundedButton(title: 'ABOUT', colorCode: 0XFFFF3B9D),
 
                 SizedBox(height: 20),
 

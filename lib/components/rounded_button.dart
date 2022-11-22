@@ -23,12 +23,21 @@ class RoundedButton extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (title == "ASSESS") {
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => PoseDetectorView(),
+          //       //TODO:
+          //     ));
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PoseDetectorView(),
-                //TODO:
-              ));
+            context,
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => PoseDetectorView(),
+              transitionDuration: Duration(milliseconds: 400),
+              transitionsBuilder: (_, a, __, c) =>
+                  FadeTransition(opacity: a, child: c),
+            ),
+          );
         } else if (title == "ABOUT") {
           Navigator.push(
               context,
@@ -57,7 +66,7 @@ class RoundedButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-                        if (title == 'ASSESS') ...[
+            if (title == 'ASSESS') ...[
               Icon(
                 Icons.straighten,
                 size: 30,
@@ -76,7 +85,9 @@ class RoundedButton extends StatelessWidget {
                 color: Colors.white,
               ),
             ],
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Text(
               title,
               style: GoogleFonts.cairo(
@@ -86,7 +97,9 @@ class RoundedButton extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               )),
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
           ],
         ),
         // child: RichText(
