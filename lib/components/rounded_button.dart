@@ -58,7 +58,7 @@ class RoundedButton extends StatelessWidget {
       child: Container(
         width: size.width * 0.8,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(20),
             border: Border.all(color: Color(colorCode), width: 2),
             color: Color(colorCode).withOpacity(1)),
         padding: EdgeInsets.symmetric(vertical: 15),

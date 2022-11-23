@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:ergo_snap/Screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'vision_detector_views/pose_detector_view.dart';
 
 List<CameraDescription> cameras = [];
@@ -9,6 +10,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   cameras = await availableCameras();
+   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+ ));
   runApp(MyApp());
 }
 
