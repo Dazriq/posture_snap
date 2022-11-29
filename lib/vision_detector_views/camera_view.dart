@@ -1,8 +1,9 @@
 import 'dart:io';
-
+import 'dart:ui' as ui;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ergo_snap/components/rounded_button.dart';
@@ -103,7 +104,6 @@ class _CameraViewState extends State<CameraView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: 30),
-
                 Container(
                     width: MediaQuery.of(context).size.width,
                     child: Stack(
@@ -117,52 +117,38 @@ class _CameraViewState extends State<CameraView> {
                         )
                       ],
                     )),
-                SizedBox(height: 10),
                 Text(
                   'POSTURE\nSNAP',
-                  style: GoogleFonts.atma(
-                      textStyle: TextStyle(
-                    fontSize: 70,
-                    fontWeight: FontWeight.bold,
-                    height: 1,
-                    foreground: Paint()..shader = _linearGradient,
-                  )),
+                  style: GoogleFonts.montserrat(
+                    textStyle: TextStyle(
+                      fontSize: 60,
+                      fontWeight: FontWeight.bold,
+                      height: 1.1,
+                      letterSpacing: 3, 
+                      foreground: Paint()..shader = _linearGradient,
+
+                    )
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
+                resultImg(),
+                SizedBox(height: 10,
+                ),
                 _image != null
-                    ? SizedBox(
-                        height: 400,
-                        width: 400,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            Image.file(_image!),
-                            if (widget.customPaint != null) widget.customPaint!,
+                    ? SizedBox(height: 10)
+                    : Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 100,
+                        color: Colors.red.withOpacity(0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            squareIconButton('camera'),
+                            squareIconButton('gallery')
                           ],
                         ),
-                      )
-                    : CameraCarousel(),
-                SizedBox(height: 10),
-                //  _image != null
-                //      ? SizedBox(height: 0)
-                //      : roundedButtonFull('TAKE A PICTURE'),
-                // SizedBox(height: 20),
-                //  _image != null
-                //      ? SizedBox(height: 0)
-                //      : roundedButtonFull('FROM GALLERY'),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: 100,
-                  color: Colors.red.withOpacity(0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      squareIconButton('camera'),
-                      squareIconButton('gallery')
-                    ],
-                  ),
-                ),
+                      ),
                 if (_image != null)
                   Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -177,6 +163,55 @@ class _CameraViewState extends State<CameraView> {
         ),
       ),
     );
+  }
+
+  Future<Size> getImgHeight() async{
+      File image = _image!; // Or any other way to get a File instance.
+      var decodedImage = await decodeImageFromList(image.readAsBytesSync());
+      print(decodedImage.width);
+      print(decodedImage.height);
+      Size imgSize = Size(decodedImage.width.toDouble(), decodedImage.height.toDouble());
+      return imgSize;
+  }
+  Future<int> getImgWidth() async{
+    File image = _image!; // Or any other way to get a File instance.
+    final decodedImage = await decodeImageFromList(image.readAsBytesSync());
+    return decodedImage.width;
+  }
+
+
+
+  Widget resultImg() {  
+    final imgHeight = getImgWidth();
+    print('Hello world');
+    String imgHeightString = imgHeight.toString(); 
+    print('imgHeight: ${imgHeight}');
+    //TODO: get image width and height to align the image
+    if (_image != null) {
+      //getImgSize()
+      return Container(
+        height: 400,
+        width: 300,
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.file(
+                _image!,
+                height: 3456,
+                width: 4608,
+              ),
+            ),
+            //Image.file(_image!),
+            if (widget.customPaint != null) widget.customPaint!,
+            if (imgHeight!= null) Text(imgHeightString)
+          ],
+        ),
+      );
+    } else {
+      return CameraCarousel();
+    }
   }
 
   Widget squareIconButton(String title) {
@@ -242,6 +277,8 @@ class _CameraViewState extends State<CameraView> {
       _image = File(path);
     });
     _path = path;
+    //TODO: get dimension of image
+
     final inputImage = InputImage.fromFilePath(path);
     widget.onImage(inputImage);
   }

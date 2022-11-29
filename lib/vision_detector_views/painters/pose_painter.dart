@@ -14,34 +14,40 @@ class PosePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 4.0
-      ..color = Colors.green;
+      ..strokeWidth = 3.0
+      ..color = Color(0XFF5BA3F8);
 
     final leftPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0
-      ..color = Colors.yellow;
+      ..strokeWidth = 2.0
+      ..color = Color(0XFFa25ce0);
 
     final rightPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0
-      ..color = Colors.blueAccent;
+      ..strokeWidth = 2.0 
+      ..color = Color(0XFFFF3B9D);
 
+    int index = 0;
     for (final pose in poses) {
       pose.landmarks.forEach((_, landmark) {
-        canvas.drawCircle(
-            Offset(
-              translateX(landmark.x, rotation, size, absoluteImageSize),
-              translateY(landmark.y, rotation, size, absoluteImageSize),
-            ),
-            1,
-            paint);
+        if (landmark.likelihood > 0.8) {
+          canvas.drawCircle(
+              Offset(
+                translateX(landmark.x, rotation, size, absoluteImageSize),
+                translateY(landmark.y, rotation, size, absoluteImageSize),
+              ),
+              1,
+              paint);
+        }
       });
 
       void paintLine(
           PoseLandmarkType type1, PoseLandmarkType type2, Paint paintType) {
         final PoseLandmark joint1 = pose.landmarks[type1]!;
         final PoseLandmark joint2 = pose.landmarks[type2]!;
+        if (joint1.likelihood < 0.8 || joint2.likelihood < 0.8) {
+          return;
+        }
         canvas.drawLine(
             Offset(translateX(joint1.x, rotation, size, absoluteImageSize),
                 translateY(joint1.y, rotation, size, absoluteImageSize)),

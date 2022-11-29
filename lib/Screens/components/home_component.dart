@@ -27,21 +27,22 @@ class HomeComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
 
               children: [
-                SizedBox(height: 90),
+                SizedBox(height: 77.5),
                 Text(
                   'POSTURE\nSNAP',
-                  style: GoogleFonts.atma(
+                  style: GoogleFonts.montserrat(
                     textStyle: TextStyle(
                       color: Colors.white,
-                      fontSize: 70,
+                      fontSize: 60,
                       fontWeight: FontWeight.bold,
-                      height: 1,
+                      height: 1.1,
+                      letterSpacing: 3, 
                     )
                   ),
                   textAlign: TextAlign.center,
                 ),
                 
-                SizedBox(height: 10),
+                SizedBox(height: 37.5),
 
                 //SvgPicture.asset('assets/images/home.svg'),
                 Image.asset('assets/images/imgHomeEdited.png'),

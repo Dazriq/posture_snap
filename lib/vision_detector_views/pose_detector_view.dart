@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ergo_snap/rula/rulaCalculator.dart';
-import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import 'dart:async';
+import 'dart:io';
 
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'camera_view.dart';
 import 'painters/pose_painter.dart';
-import '../rula/joinAngleCalculator.dart';
+import 'package:image_picker/image_picker.dart';
+import '../rula/rulaCalculator.dart';
+
 
 class PoseDetectorView extends StatefulWidget {
   @override
@@ -39,6 +42,22 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     );
   }
 
+  Future<Size> _calculateImageDimension(String imgPath) {
+  Completer<Size> completer = Completer();
+  Image image = Image.file(File(imgPath));
+  image.image.resolve(ImageConfiguration()).addListener(
+    ImageStreamListener(
+      (ImageInfo image, bool synchronousCall) {
+        var myImage = image.image;
+        Size size = Size(myImage.width.toDouble(), myImage.height.toDouble());
+        completer.complete(size);
+      },
+    ),
+  );
+  return completer.future;
+  }
+
+
   Future<void> processImage(InputImage inputImage) async {
 
     if (!_canProcess) return;
@@ -54,11 +73,21 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           inputImage.inputImageData!.imageRotation);
       _customPaint = CustomPaint(painter: painter);
     } else {
-      _text = 'Poses found ${calculateRula(poses)}';
+      //File image = new File(inputImage.filePath);
+      //File image2 = new File(fileBits, fileName)
+      File image = new File(inputImage.filePath!); // Or any other way to get a File instance.
+      var decodedImage = await decodeImageFromList(image.readAsBytesSync());
+      print(decodedImage.width);
+      print(decodedImage.height);
+      Size imgSize = Size(decodedImage.width.toDouble(), decodedImage.height.toDouble());
+      //_text = 'file path: ${decodedImage.width} X ${decodedImage.height} ';
+      //TODO: get size of image (width/height) in pixels
 
-
+      final painter = PosePainter(poses, imgSize,
+      InputImageRotation.rotation0deg);
+      _customPaint = CustomPaint(painter: painter);
+      _text = 'Poses found ${calculateRula(poses)} \n ${inputImage}';
       // TODO: set _customPaint to draw landmarks on top of image
-      _customPaint = null;
     }
     _isBusy = false;
     if (mounted) {
