@@ -41,6 +41,7 @@ class _CameraViewState extends State<CameraView> {
   CameraController? _controller;
   File? _image;
   String? _path;
+  Size? _imgSize;
   ImagePicker? _imagePicker;
   int _cameraIndex = 0;
   double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
@@ -91,69 +92,130 @@ class _CameraViewState extends State<CameraView> {
       end: Alignment.topRight,
       stops: [0.3, 0.7],
     ).createShader(const Rect.fromLTWH(0.0, 0.0, 320.0, 80.0));
-
     return Container(
       child: Align(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         child: Container(
-          width: MediaQuery.of(context).size.width * 1,
-          height: MediaQuery.of(context).size.height * 1,
+          width: MediaQuery.of(context).size.width,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 30),
                 Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      alignment: Alignment.topLeft,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.arrow_back),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
-                    )),
-                Text(
-                  'POSTURE\nSNAP',
-                  style: GoogleFonts.montserrat(
-                    textStyle: TextStyle(
-                      fontSize: 60,
-                      fontWeight: FontWeight.bold,
-                      height: 1.1,
-                      letterSpacing: 3, 
-                      foreground: Paint()..shader = _linearGradient,
-
-                    )
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 10),
-                resultImg(),
-                SizedBox(height: 10,
-                ),
-                _image != null
-                    ? SizedBox(height: 10)
-                    : Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: 100,
-                        color: Colors.red.withOpacity(0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            squareIconButton('camera'),
-                            squareIconButton('gallery')
-                          ],
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: [
+                      _image != null
+                          ? Container(
+                              child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.45,
+                              child: const DecoratedBox(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0XFFFF3B9D),
+                                      Color(0XFFa25ce0)
+                                    ],
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    stops: [0.3, 0.7],
+                                  ),
+                                ),
+                                //const BoxDecoration(color: Color(0XFFFF3B9D))
+                              ),
+                            ))
+                          : SizedBox(
+                              height: 0,
+                            ),
+                      Container(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 1,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 30),
+                                  Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Stack(
+                                        alignment: Alignment.topLeft,
+                                        children: <Widget>[
+                                          IconButton(
+                                            icon: Icon(Icons.arrow_back),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          )
+                                        ],
+                                      )),
+                                  _image == null
+                                      ? Text(
+                                          'POSTURE\nSNAP',
+                                          style: GoogleFonts.montserrat(
+                                              textStyle: TextStyle(
+                                            fontSize: 60,
+                                            fontWeight: FontWeight.bold,
+                                            height: 1.1,
+                                            letterSpacing: 3,
+                                            foreground: Paint()
+                                              ..shader = _linearGradient,
+                                          )),
+                                          textAlign: TextAlign.center,
+                                        )
+                                      : Text(
+                                          'RESULT',
+                                          style: GoogleFonts.montserrat(
+                                              textStyle: TextStyle(
+                                            fontSize: 60,
+                                            fontWeight: FontWeight.bold,
+                                            height: 1.1,
+                                            letterSpacing: 3,
+                                            color: Colors.white,
+                                          )),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                  SizedBox(height: 10),
+                                  resultImg2(),
+                                  //resultImg(),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  _image != null
+                                      ? SizedBox(height: 10)
+                                      : Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.8,
+                                          height: 100,
+                                          color: Colors.red.withOpacity(0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              squareIconButton('camera'),
+                                              squareIconButton('gallery')
+                                            ],
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
                 if (_image != null)
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                        '${_path == null ? '' : 'Working...'}\n\n${widget.text ?? ''}'),
+                    child: Text('${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
                     //path of image = _path
                   ),
                 SizedBox(height: 30),
@@ -165,50 +227,88 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 
-  Future<Size> getImgHeight() async{
-      File image = _image!; // Or any other way to get a File instance.
-      var decodedImage = await decodeImageFromList(image.readAsBytesSync());
-      print(decodedImage.width);
-      print(decodedImage.height);
-      Size imgSize = Size(decodedImage.width.toDouble(), decodedImage.height.toDouble());
-      return imgSize;
-  }
-  Future<int> getImgWidth() async{
+  void getImgSize() async {
     File image = _image!; // Or any other way to get a File instance.
-    final decodedImage = await decodeImageFromList(image.readAsBytesSync());
-    return decodedImage.width;
+    var decodedImage = await decodeImageFromList(image.readAsBytesSync());
+    print(decodedImage.width);
+    print(decodedImage.height);
+    _imgSize =
+        Size(decodedImage.width.toDouble(), decodedImage.height.toDouble());
   }
 
-
-
-  Widget resultImg() {  
-    final imgHeight = getImgWidth();
-    print('Hello world');
-    String imgHeightString = imgHeight.toString(); 
-    print('imgHeight: ${imgHeight}');
+  Widget resultImg() {
     //TODO: get image width and height to align the image
     if (_image != null) {
       //getImgSize()
       return Container(
         height: 400,
         width: 300,
+        // padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
+            Image.file(_image!, fit: BoxFit.cover),
             ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.file(
-                _image!,
-                height: 3456,
-                width: 4608,
+              child: BackdropFilter(
+                filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  color: Colors.black.withOpacity(0.1),
+                  alignment: Alignment.center,
+                ),
               ),
             ),
-            //Image.file(_image!),
+            Image.file(_image!),
             if (widget.customPaint != null) widget.customPaint!,
-            if (imgHeight!= null) Text(imgHeightString)
           ],
         ),
       );
+    } else {
+      return CameraCarousel();
+    }
+  }
+
+  Widget resultImg2() {
+    //TODO: get image width and height to align the image
+    if (_image != null) {
+      //getImgSize()
+      return Container(
+          height: 420,
+          width: 320,
+          // padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Container(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Container(
+                    child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  //const BoxDecoration(color: Color(0XFFFF3B9D))
+                )),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  // padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: <Widget>[
+                      Image.file(_image!),
+                      if (widget.customPaint != null) widget.customPaint!,
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ));
     } else {
       return CameraCarousel();
     }
@@ -280,6 +380,8 @@ class _CameraViewState extends State<CameraView> {
     //TODO: get dimension of image
 
     final inputImage = InputImage.fromFilePath(path);
+    getImgSize();
+    setState(() {});
     widget.onImage(inputImage);
   }
 

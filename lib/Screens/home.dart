@@ -51,63 +51,6 @@ class _HomeScreenState extends State<HomeScreen>
               //const BoxDecoration(color: Color(0XFFFF3B9D))
             ),
           )),
-          // Positioned(
-          //     top: -125,
-          //     left: -100,
-          //     child: Container(
-          //       width: 500,
-          //       height: 500,
-          //       decoration: BoxDecoration(
-          //           borderRadius: BorderRadius.circular(250),
-          //           border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-          //           color: Colors.white.withOpacity(0)),
-          //     )),
-          //     Positioned(
-          //     top: -125,
-          //     right: -100,
-          //     child: Container(
-          //       width: 500,
-          //       height: 500,
-          //       decoration: BoxDecoration(
-          //           borderRadius: BorderRadius.circular(250),
-          //           border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-          //           color: Colors.white.withOpacity(0)),
-          //     )),
-          //                   Positioned(
-          //     top: -125,
-          //     right: -75,
-          //     child: Container(
-          //       width: 500,
-          //       height: 500,
-          //       decoration: BoxDecoration(
-          //           borderRadius: BorderRadius.circular(250),
-          //           border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-          //           color: Colors.white.withOpacity(0)),
-          //     )),
-          //     Positioned(
-          //     top: -125,
-          //     left: -75,
-          //     child: Container(
-          //       width: 500,
-          //       height: 500,
-          //       decoration: BoxDecoration(
-          //           borderRadius: BorderRadius.circular(250),
-          //           border: Border.all(color: Color(0XFFFF3B9D), width: 2),
-          //           color: Colors.white.withOpacity(0)),
-          //     )),
-
-          // Positioned(
-          //     top: -50,
-          //     left: -50,
-          //     child: Container(
-          //       width: 200,
-          //       height: 200,
-          //       decoration: BoxDecoration(
-          //           borderRadius: BorderRadius.circular(100),
-          //           border: Border.all(color: Color(0XFF0D6EFD), width: 2),
-          //           color: Colors.white),
-          //     )),
-          // Login Form
           HomeComponent(size: size, defaultLoginSize: defaultLoginSize),
         ],
       ),

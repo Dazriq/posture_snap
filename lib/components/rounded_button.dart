@@ -21,6 +21,8 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
+      splashColor : Color(0XFFa25ce0),
+      customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       onTap: () {
         if (title == "ASSESS") {
           // Navigator.push(
@@ -59,9 +61,22 @@ class RoundedButton extends StatelessWidget {
         width: size.width * 0.8,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Color(colorCode), width: 2),
-            color: Color(colorCode).withOpacity(1)),
-        padding: EdgeInsets.symmetric(vertical: 15),
+            color: Color(colorCode).withOpacity(1), 
+
+            //   BoxShadow(
+            //     color: Colors.grey.shade600,
+            //     spreadRadius: 1,
+            //     blurRadius: 3,
+            //     offset: Offset(0,4),
+            //   ), 
+            //   BoxShadow(
+            //     color: Colors.grey.shade600,
+            //     spreadRadius: 1,
+            //     blurRadius: 3,
+            //     offset: Offset(4, 0),
+            //   )
+            ),
+        padding: EdgeInsets.symmetric(vertical: 17),
         alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
