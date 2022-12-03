@@ -75,7 +75,6 @@ class _CameraViewState extends State<CameraView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _body(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -180,7 +179,7 @@ class _CameraViewState extends State<CameraView> {
                                           textAlign: TextAlign.center,
                                         ),
                                   SizedBox(height: 10),
-                                  resultImg2(),
+                                  resultImg(),
                                   //resultImg(),
                                   SizedBox(
                                     height: 10,
@@ -213,16 +212,133 @@ class _CameraViewState extends State<CameraView> {
                   ),
                 ),
                 if (_image != null)
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text('${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
-                    //path of image = _path
-                  ),
-                SizedBox(height: 30),
+                  resultRula('EXCELLENT', 'You have good posture'),
+                if (_image != null) resultRula('GOOD', 'You have good posture'),
+                if (_image != null)
+                  resultRula('FAIR', 'You have average posture'),
+                if (_image != null)
+                  resultRula('POOR', 'Please correct your posture')
+
+                // if (_image != null)
+                //   Padding(
+                //     padding: const EdgeInsets.all(16.0),
+                //     child: Text(
+                //         '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
+                //     //path of image = _path
+                //   ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget resultRula(title, message) {
+    int colorCode = 0XFF555555;
+    switch (title) {
+      case 'EXCELLENT':
+        colorCode = 0XFF38E54D;
+        break;
+
+      case 'GOOD':
+        colorCode = 0XFFFCE700;
+        break;
+
+      case 'FAIR':
+        colorCode = 0XFFFF7000;
+        break;
+
+      case 'POOR':
+        colorCode = 0XFFDC3535;
+        break;
+
+      default:
+        break;
+    }
+
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: 110,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Color(colorCode),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: Offset(0, 4), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (title == 'EXCELLENT') ...[
+            Icon(
+              Icons.sentiment_very_satisfied,
+              size: 90,
+              color: Colors.white,
+            ),
+          ] else if (title == 'GOOD') ...[
+            Icon(
+              Icons.sentiment_satisfied,
+              size: 90,
+              color: Colors.white,
+            ),
+          ] 
+          else if (title == 'FAIR') ...[
+            Icon(
+              Icons.sentiment_neutral,
+              size: 90,
+              color: Colors.white,
+            ),
+          ]
+          else ...[
+            Icon(
+              Icons.sentiment_dissatisfied,
+              size: 90,
+              color: Colors.white,
+            ),
+          ],
+          SizedBox(
+            width: 10,
+          ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2)),
+                ),
+                FittedBox(
+                  fit: BoxFit.fill,
+                  child: Text(
+                    message,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                    )),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+        ],
       ),
     );
   }
@@ -237,40 +353,6 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget resultImg() {
-    //TODO: get image width and height to align the image
-    if (_image != null) {
-      //getImgSize()
-      return Container(
-        height: 400,
-        width: 300,
-        // padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Image.file(_image!, fit: BoxFit.cover),
-            ClipRRect(
-              child: BackdropFilter(
-                filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  color: Colors.black.withOpacity(0.1),
-                  alignment: Alignment.center,
-                ),
-              ),
-            ),
-            Image.file(_image!),
-            if (widget.customPaint != null) widget.customPaint!,
-          ],
-        ),
-      );
-    } else {
-      return CameraCarousel();
-    }
-  }
-
-  Widget resultImg2() {
     //TODO: get image width and height to align the image
     if (_image != null) {
       //getImgSize()
@@ -354,6 +436,10 @@ class _CameraViewState extends State<CameraView> {
             ),
           ));
     }
+  }
+
+  Widget poseAssessment() {
+    return SizedBox();
   }
 
   Future _getImage(ImageSource source) async {
