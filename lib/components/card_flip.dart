@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CardFlip extends StatelessWidget {
+class CardFlip extends StatefulWidget {
   const CardFlip(
       {Key? key, required this.icon, required this.title, required this.result})
       : super(key: key);
@@ -9,14 +9,19 @@ class CardFlip extends StatelessWidget {
   final String icon;
   final String title;
   final String result;
+  @override
+  State<CardFlip> createState() => _CardFlipState();
+}
+
+class _CardFlipState extends State<CardFlip> {
+
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String path = 'assets/icons/' + icon;
-    double widthContainer = 100, heightContainer = 125;
+    String path = 'assets/icons/' + widget.icon;
     int colorCode = 0XFF38E54D;
-    switch (result) {
+    switch (widget.result) {
       case 'EXCELLENT':
         colorCode = 0XFF38E54D;
         break;
@@ -36,6 +41,11 @@ class CardFlip extends StatelessWidget {
       default:
         break;
     }
+    return card(colorCode, path);
+  }
+  //TODO: enable click to flip the card
+  Widget card(int colorCode, String path) {
+    double widthContainer = 100, heightContainer = 125;
     return Container(
         width: widthContainer,
         height: heightContainer,
@@ -56,7 +66,7 @@ class CardFlip extends StatelessWidget {
               onTap: () {},
             ),
             Text(
-              title,
+              widget.title,
               style: GoogleFonts.montserrat(
                   textStyle: TextStyle(
                       color: Colors.white,
