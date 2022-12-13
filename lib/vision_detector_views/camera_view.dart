@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ergo_snap/components/rounded_button.dart';
+import 'package:ergo_snap/components/card_flip.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import '../Screens/components/camera_carousel.dart';
@@ -42,6 +43,7 @@ class _CameraViewState extends State<CameraView> {
   File? _image;
   String? _path;
   Size? _imgSize;
+  bool isFabVisible = false;
   ImagePicker? _imagePicker;
   int _cameraIndex = 0;
   double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
@@ -75,6 +77,30 @@ class _CameraViewState extends State<CameraView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _body(),
+      floatingActionButton: isFabVisible
+          ? FloatingActionButton.extended(
+              //TODO: make floating action button action
+              onPressed: () {
+                setState(() {
+                  _image = null;
+                  _path = null;
+                  isFabVisible = false;
+                });
+              },
+              label: Text(
+                'Re-Assess',
+                style: GoogleFonts.cairo(
+                    textStyle: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                )),
+                textAlign: TextAlign.center,
+              ),
+              icon: Icon(Icons.replay,),
+              backgroundColor: Color(0XFFFF3B9D) 
+            )
+          : null,
     );
   }
 
@@ -212,12 +238,19 @@ class _CameraViewState extends State<CameraView> {
                   ),
                 ),
                 if (_image != null)
-                  resultRula('EXCELLENT', 'You have good posture'),
-                if (_image != null) resultRula('GOOD', 'You have good posture'),
-                if (_image != null)
-                  resultRula('FAIR', 'You have average posture'),
-                if (_image != null)
-                  resultRula('POOR', 'Please correct your posture')
+                  overallResult('EXCELLENT', 'You have good posture'),
+                SizedBox(
+                  height: 20,
+                ),
+                if (_image != null) resultIconsSquared(),
+                SizedBox(
+                  height: 90,
+                ),
+                // if (_image != null) {
+                //   setState(() {
+                //     isFabVisible = true;
+                //   });
+                // }
 
                 // if (_image != null)
                 //   Padding(
@@ -234,7 +267,27 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 
-  Widget resultRula(title, message) {
+  Widget resultIconsSquared() {
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.95,
+        child: Column(
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              CardFlip(icon: 'neck.png', title: 'NECK', result: 'FAIR'),
+              CardFlip(icon: 'shoulder.png', title: 'SHOULDER', result: 'EXCELLENT'),
+              CardFlip(icon: 'arm.png', title: 'ARM', result: 'GOOD')
+            ]),
+            SizedBox(height: 10),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              CardFlip(icon: 'wrist.png', title: 'WRIST', result: 'EXCELLENT'),
+              CardFlip(icon: 'trunk.png', title: 'TRUNK', result: 'GOOD'),
+              CardFlip(icon: 'fullBody.png', title: 'OTHERS', result: 'POOR')
+            ]),
+          ],
+        ));
+  }
+
+  Widget overallResult(title, message) {
     int colorCode = 0XFF555555;
     switch (title) {
       case 'EXCELLENT':
@@ -287,15 +340,13 @@ class _CameraViewState extends State<CameraView> {
               size: 90,
               color: Colors.white,
             ),
-          ] 
-          else if (title == 'FAIR') ...[
+          ] else if (title == 'FAIR') ...[
             Icon(
               Icons.sentiment_neutral,
               size: 90,
               color: Colors.white,
             ),
-          ]
-          else ...[
+          ] else ...[
             Icon(
               Icons.sentiment_dissatisfied,
               size: 90,
@@ -461,6 +512,7 @@ class _CameraViewState extends State<CameraView> {
     }
     setState(() {
       _image = File(path);
+      isFabVisible = true;
     });
     _path = path;
     //TODO: get dimension of image
@@ -510,6 +562,9 @@ class _CameraViewState extends State<CameraView> {
     final inputImage =
         InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 
+    setState(() {
+      isFabVisible = true;
+    });
     widget.onImage(inputImage);
   }
 }
