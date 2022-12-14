@@ -273,15 +273,15 @@ class _CameraViewState extends State<CameraView> {
         child: Column(
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CardFlip(icon: 'neck.png', title: 'NECK', result: 'FAIR'),
-              CardFlip(icon: 'shoulder.png', title: 'SHOULDER', result: 'EXCELLENT'),
-              CardFlip(icon: 'arm.png', title: 'ARM', result: 'GOOD')
+              CardFlip(icon: 'neck.png', title: 'NECK', result: 'FAIR', angle: 25.32532),
+              CardFlip(icon: 'shoulder.png', title: 'SHOULDER', result: 'EXCELLENT', angle: 73.654),
+              CardFlip(icon: 'arm.png', title: 'ARM', result: 'GOOD', angle: 55.879)
             ]),
             SizedBox(height: 10),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CardFlip(icon: 'wrist.png', title: 'WRIST', result: 'EXCELLENT'),
-              CardFlip(icon: 'trunk.png', title: 'TRUNK', result: 'GOOD'),
-              CardFlip(icon: 'fullBody.png', title: 'OTHERS', result: 'POOR')
+              CardFlip(icon: 'wrist.png', title: 'WRIST', result: 'EXCELLENT', angle: 69.93),
+              CardFlip(icon: 'trunk.png', title: 'TRUNK', result: 'GOOD', angle: 170.02),
+              CardFlip(icon: 'fullBody.png', title: 'OTHERS', result: 'POOR', angle: 120.342)
             ]),
           ],
         ));

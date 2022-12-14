@@ -33,12 +33,10 @@ class RoundedButton extends StatelessWidget {
           //     ));
           Navigator.push(
             context,
-            PageRouteBuilder(
-              pageBuilder: (_, __, ___) => PoseDetectorView(),
-              transitionDuration: Duration(milliseconds: 400),
-              transitionsBuilder: (_, a, __, c) =>
-                  FadeTransition(opacity: a, child: c),
-            ),
+                          MaterialPageRoute(
+                builder: (context) => PoseDetectorView(),
+                //TODO:
+              )
           );
         } else if (title == "ABOUT") {
           Navigator.push(
