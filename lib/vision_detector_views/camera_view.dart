@@ -79,7 +79,6 @@ class _CameraViewState extends State<CameraView> {
       body: _body(),
       floatingActionButton: isFabVisible
           ? FloatingActionButton.extended(
-              //TODO: make floating action button action
               onPressed: () {
                 setState(() {
                   _image = null;
@@ -515,7 +514,6 @@ class _CameraViewState extends State<CameraView> {
       isFabVisible = true;
     });
     _path = path;
-    //TODO: get dimension of image
 
     final inputImage = InputImage.fromFilePath(path);
     getImgSize();

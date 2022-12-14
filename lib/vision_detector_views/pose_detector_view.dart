@@ -81,7 +81,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       print(decodedImage.height);
       Size imgSize = Size(decodedImage.width.toDouble(), decodedImage.height.toDouble());
       //_text = 'file path: ${decodedImage.width} X ${decodedImage.height} ';
-      //TODO: get size of image (width/height) in pixels
 
       final painter = PosePainter(poses, imgSize,
       InputImageRotation.rotation0deg);

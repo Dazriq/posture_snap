@@ -58,7 +58,6 @@ class _CardFlipState extends State<CardFlip> {
     );
   }
 
-  //TODO: enable click to flip the card
   Widget cardFront(int colorCode, String path) {
     double widthContainer = 100, heightContainer = 125;
     return Container(
