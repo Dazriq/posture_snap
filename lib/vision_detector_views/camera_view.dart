@@ -8,6 +8,7 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ergo_snap/components/rounded_button.dart';
 import 'package:ergo_snap/components/card_flip.dart';
+import 'package:ergo_snap/components/result_flip.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import '../Screens/components/camera_carousel.dart';
@@ -79,6 +80,8 @@ class _CameraViewState extends State<CameraView> {
       body: _body(),
       floatingActionButton: isFabVisible
           ? FloatingActionButton.extended(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               onPressed: () {
                 setState(() {
                   _image = null;
@@ -96,9 +99,10 @@ class _CameraViewState extends State<CameraView> {
                 )),
                 textAlign: TextAlign.center,
               ),
-              icon: Icon(Icons.replay,),
-              backgroundColor: Color(0XFFFF3B9D) 
-            )
+              icon: Icon(
+                Icons.replay,
+              ),
+              backgroundColor: Color(0XFFFF3B9D))
           : null,
     );
   }
@@ -236,8 +240,7 @@ class _CameraViewState extends State<CameraView> {
                     ],
                   ),
                 ),
-                if (_image != null)
-                  overallResult('EXCELLENT', 'You have good posture'),
+                if (_image != null) ResultFlip(result: 'EXCELLENT'),
                 SizedBox(
                   height: 20,
                 ),
@@ -272,126 +275,41 @@ class _CameraViewState extends State<CameraView> {
         child: Column(
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CardFlip(icon: 'neck.png', title: 'NECK', result: 'FAIR', angle: 25.32532),
-              CardFlip(icon: 'shoulder.png', title: 'SHOULDER', result: 'EXCELLENT', angle: 73.654),
-              CardFlip(icon: 'arm.png', title: 'ARM', result: 'GOOD', angle: 55.879)
+              CardFlip(
+                  icon: 'neck.png',
+                  title: 'NECK',
+                  result: 'FAIR',
+                  angle: 25.32532),
+              CardFlip(
+                  icon: 'shoulder.png',
+                  title: 'SHOULDER',
+                  result: 'EXCELLENT',
+                  angle: 73.654),
+              CardFlip(
+                  icon: 'arm.png', title: 'ARM', result: 'GOOD', angle: 55.879)
             ]),
             SizedBox(height: 10),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CardFlip(icon: 'wrist.png', title: 'WRIST', result: 'EXCELLENT', angle: 69.93),
-              CardFlip(icon: 'trunk.png', title: 'TRUNK', result: 'GOOD', angle: 170.02),
-              CardFlip(icon: 'fullBody.png', title: 'OTHERS', result: 'POOR', angle: 120.342)
+              CardFlip(
+                  icon: 'wrist.png',
+                  title: 'WRIST',
+                  result: 'EXCELLENT',
+                  angle: 69.93),
+              CardFlip(
+                  icon: 'trunk.png',
+                  title: 'TRUNK',
+                  result: 'GOOD',
+                  angle: 170.02),
+              CardFlip(
+                  icon: 'fullBody.png',
+                  title: 'OTHERS',
+                  result: 'POOR',
+                  angle: 120.342),
             ]),
           ],
         ));
   }
 
-  Widget overallResult(title, message) {
-    int colorCode = 0XFF555555;
-    switch (title) {
-      case 'EXCELLENT':
-        colorCode = 0XFF38E54D;
-        break;
-
-      case 'GOOD':
-        colorCode = 0XFFFCE700;
-        break;
-
-      case 'FAIR':
-        colorCode = 0XFFFF7000;
-        break;
-
-      case 'POOR':
-        colorCode = 0XFFDC3535;
-        break;
-
-      default:
-        break;
-    }
-
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: 110,
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Color(colorCode),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 1,
-            blurRadius: 2,
-            offset: Offset(0, 4), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (title == 'EXCELLENT') ...[
-            Icon(
-              Icons.sentiment_very_satisfied,
-              size: 90,
-              color: Colors.white,
-            ),
-          ] else if (title == 'GOOD') ...[
-            Icon(
-              Icons.sentiment_satisfied,
-              size: 90,
-              color: Colors.white,
-            ),
-          ] else if (title == 'FAIR') ...[
-            Icon(
-              Icons.sentiment_neutral,
-              size: 90,
-              color: Colors.white,
-            ),
-          ] else ...[
-            Icon(
-              Icons.sentiment_dissatisfied,
-              size: 90,
-              color: Colors.white,
-            ),
-          ],
-          SizedBox(
-            width: 10,
-          ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2)),
-                ),
-                FittedBox(
-                  fit: BoxFit.fill,
-                  child: Text(
-                    message,
-                    textAlign: TextAlign.left,
-                    style: GoogleFonts.montserrat(
-                        textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1,
-                    )),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-        ],
-      ),
-    );
-  }
 
   void getImgSize() async {
     File image = _image!; // Or any other way to get a File instance.

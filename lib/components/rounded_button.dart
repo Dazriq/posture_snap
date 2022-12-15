@@ -115,44 +115,6 @@ class RoundedButton extends StatelessWidget {
             ),
           ],
         ),
-        // child: RichText(
-        //   text: TextSpan(
-        //     children: <InlineSpan>[
-        //       TextSpan(
-        //         text: title,
-        //         style: GoogleFonts.cairo(
-        //           textStyle: TextStyle(
-        //             color: Color(colorCode),
-        //             fontSize: 22,
-        //             fontWeight: FontWeight.bold,
-        //           )
-        //         ),
-        //       //   style: TextStyle(
-        //       // color: Color(colorCode),
-        //       // fontSize: 23,
-        //       // fontWeight: FontWeight.bold),
-        //       ),
-        //       //                 TextSpan(
-        //       //   text: '  ',
-        //       //   style: TextStyle(
-        //       // color: Color(colorCode),
-        //       // fontSize: 23,
-        //       // fontWeight: FontWeight.bold),
-        //       // ),
-        //       WidgetSpan(
-        //         alignment: PlaceholderAlignment.middle,
-        //         child: Icon(Icons.school, size: 30, color: Color(0XFFFF3B9D),),
-        //       ),
-        //     ],
-        //   ),
-        // )
-        // Text(
-        //   title,
-        //   style: TextStyle(
-        //       color: Color(colorCode),
-        //       fontSize: 23,
-        //       fontWeight: FontWeight.bold),
-        // ),
       ),
     );
   }

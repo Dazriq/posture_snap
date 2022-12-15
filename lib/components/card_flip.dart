@@ -119,7 +119,7 @@ class _CardFlipState extends State<CardFlip> {
               ),
             ),
             Text(
-              widget.title,
+              widget.result,
               style: GoogleFonts.montserrat(
                   textStyle: TextStyle(
                       color: Colors.white,
