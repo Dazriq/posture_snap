@@ -95,13 +95,13 @@ class _ResultFlipState extends State<ResultFlip> {
           children: [
             if (result == 'EXCELLENT') ...[
               Icon(
-                Icons.sentiment_very_satisfied,
+                Icons.sentiment_very_satisfied_outlined,
                 size: 60,
                 color: Colors.white,
               ),
             ] else if (result == 'GOOD') ...[
               Icon(
-                Icons.sentiment_satisfied,
+                Icons.sentiment_very_satisfied,
                 size: 60,
                 color: Colors.white,
               ),
@@ -113,7 +113,7 @@ class _ResultFlipState extends State<ResultFlip> {
               ),
             ] else ...[
               Icon(
-                Icons.sentiment_dissatisfied,
+                Icons.sentiment_very_dissatisfied_outlined,
                 size: 60,
                 color: Colors.white,
               ),
@@ -183,13 +183,13 @@ class _ResultFlipState extends State<ResultFlip> {
         children: [
           if (title == 'EXCELLENT') ...[
             Icon(
-              Icons.sentiment_very_satisfied,
+              Icons.sentiment_very_satisfied_outlined,
               size: 90,
               color: Colors.white,
             ),
           ] else if (title == 'GOOD') ...[
             Icon(
-              Icons.sentiment_satisfied,
+              Icons.sentiment_very_satisfied,
               size: 90,
               color: Colors.white,
             ),
@@ -201,7 +201,7 @@ class _ResultFlipState extends State<ResultFlip> {
             ),
           ] else ...[
             Icon(
-              Icons.sentiment_dissatisfied,
+              Icons.sentiment_very_dissatisfied_outlined,
               size: 90,
               color: Colors.white,
             ),
