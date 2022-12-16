@@ -8,13 +8,28 @@ class Joint {
   late PoseLandmark a;
   late PoseLandmark b;
   late PoseLandmark c;
-
+  late String view;
   late double angle;
 
-  Joint(PoseLandmark a, PoseLandmark b, PoseLandmark c) {
+  Joint(PoseLandmark a, PoseLandmark b, PoseLandmark c, String view) {
     this.a = a;
     this.b = b;
     this.c = c;
+    this.view = view;
+    this.angle = calculateAngle2d(this.a, this.b, this.c, this.view);
+  }
+
+  @override
+  String toString() {
+    String returnValue = '';
+
+    PoseLandmarkType a = this.a.type;
+    PoseLandmarkType b = this.b.type;
+    PoseLandmarkType c = this.c.type;
+
+    returnValue = returnValue + '\a: $a \nb: $b \nc: $c \nangle: $angle \n';
+    // TODO: implement toString
+    return returnValue;
   }
 }
 
@@ -47,6 +62,8 @@ double calculateAngle2d(PoseLandmark jointA, PoseLandmark jointB, PoseLandmark j
 
   return angle; 
 }
+
+
 
 void getAngles(List<PoseLandmark> joints) {}
 //TODO: list all the joints 

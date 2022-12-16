@@ -85,7 +85,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final painter = PosePainter(poses, imgSize,
       InputImageRotation.rotation0deg);
       _customPaint = CustomPaint(painter: painter);
-      _text = 'Poses found ${calculateRula(poses)} \n ${inputImage}';
+      _text = 'Poses found \n${calculateRula(poses)} \n ${inputImage}';
       // TODO: set _customPaint to draw landmarks on top of image
     }
     _isBusy = false;

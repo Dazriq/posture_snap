@@ -15,7 +15,7 @@ import '../Screens/components/camera_carousel.dart';
 import '../main.dart';
 
 enum ScreenMode { liveFeed, gallery }
-
+ 
 class CameraView extends StatefulWidget {
   CameraView(
       {Key? key,
@@ -240,6 +240,13 @@ class _CameraViewState extends State<CameraView> {
                     ],
                   ),
                 ),
+                if (_image != null)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                        '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
+                    //path of image = _path
+                  ),
                 if (_image != null) ResultFlip(result: 'EXCELLENT'),
                 SizedBox(
                   height: 20,
@@ -248,19 +255,6 @@ class _CameraViewState extends State<CameraView> {
                 SizedBox(
                   height: 90,
                 ),
-                // if (_image != null) {
-                //   setState(() {
-                //     isFabVisible = true;
-                //   });
-                // }
-
-                // if (_image != null)
-                //   Padding(
-                //     padding: const EdgeInsets.all(16.0),
-                //     child: Text(
-                //         '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
-                //     //path of image = _path
-                //   ),
               ],
             ),
           ),
