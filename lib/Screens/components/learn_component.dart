@@ -51,7 +51,7 @@ class LearnComponent extends StatelessWidget {
                 h2(context,
                     'You just press the button below, take a posture picture, then you\'re done!'),
                 SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 RoundedButton(title: 'ASSESS', colorCode: 0XFFFF3B9D),
               ],
@@ -68,10 +68,10 @@ class LearnComponent extends StatelessWidget {
         child: Text(
           title,
           textAlign: TextAlign.center,
-          style: GoogleFonts.atma(
+          style: GoogleFonts.montserrat(
               textStyle: TextStyle(
                   color: Color(0XFFFF3B9D),
-                  fontSize: 35,
+                  fontSize: 33,
                   height: 1.5,
                   fontWeight: FontWeight.bold)),
         ));
@@ -82,13 +82,13 @@ class LearnComponent extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.8,
         child: Text(
           title,
-          textAlign: TextAlign.justify,
-          style: GoogleFonts.cairo(
+          textAlign: TextAlign.center,
+          style: GoogleFonts.montserrat(
               textStyle: TextStyle(
                   color: Color(0XFF0D6EFD),
                   height: 1.8,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold)),
+                  )),
         ));
   }
 

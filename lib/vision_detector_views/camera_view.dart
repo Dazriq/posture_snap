@@ -15,7 +15,7 @@ import '../Screens/components/camera_carousel.dart';
 import '../main.dart';
 
 enum ScreenMode { liveFeed, gallery }
- 
+
 class CameraView extends StatefulWidget {
   CameraView(
       {Key? key,
@@ -231,6 +231,28 @@ class _CameraViewState extends State<CameraView> {
                                             ],
                                           ),
                                         ),
+                                  _image != null
+                                      ? SizedBox(height: 0)
+                                      : SizedBox(
+                                          height: 50,
+                                        ),
+                                  _image != null
+                                      ? SizedBox(height: 0)
+                                      : Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.8,
+                                          child: Text(
+                                            'Disclaimer : This application is not connected to a server, hence your privacy is protected.',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.montserrat(
+                                                textStyle: TextStyle(
+                                              color: Color(0XFF0D6EFD),
+                                              height: 1,
+                                              fontSize: 15,
+                                            )),
+                                          )),
                                 ],
                               ),
                             ),
@@ -240,13 +262,6 @@ class _CameraViewState extends State<CameraView> {
                     ],
                   ),
                 ),
-                if (_image != null)
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                        '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
-                    //path of image = _path
-                  ),
                 if (_image != null) ResultFlip(result: 'EXCELLENT'),
                 SizedBox(
                   height: 20,
@@ -255,6 +270,19 @@ class _CameraViewState extends State<CameraView> {
                 SizedBox(
                   height: 90,
                 ),
+                // if (_image != null) {
+                //   setState(() {
+                //     isFabVisible = true;
+                //   });
+                // }
+
+                // if (_image != null)
+                //   Padding(
+                //     padding: const EdgeInsets.all(16.0),
+                //     child: Text(
+                //         '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
+                //     //path of image = _path
+                //   ),
               ],
             ),
           ),
@@ -303,7 +331,6 @@ class _CameraViewState extends State<CameraView> {
           ],
         ));
   }
-
 
   void getImgSize() async {
     File image = _image!; // Or any other way to get a File instance.
