@@ -276,13 +276,13 @@ class _CameraViewState extends State<CameraView> {
                 //   });
                 // }
 
-                // if (_image != null)
-                //   Padding(
-                //     padding: const EdgeInsets.all(16.0),
-                //     child: Text(
-                //         '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
-                //     //path of image = _path
-                //   ),
+                 if (_image != null)
+                   Padding(
+                     padding: const EdgeInsets.all(16.0),
+                     child: Text(
+                         '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
+                     //path of image = _path
+                   ),
               ],
             ),
           ),
