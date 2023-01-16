@@ -276,10 +276,10 @@ class _CameraViewState extends State<CameraView> {
                 //     isFabVisible = true;
                 //   });
                 // }
-
+                
                  if (_image != null)
                    Padding(
-                     padding: const EdgeInsets.all(16.0),
+                     padding: const EdgeInsets.only(bottom: 100),
                      child: Text(
                          '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
                      //path of image = _path

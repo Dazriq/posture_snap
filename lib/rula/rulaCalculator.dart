@@ -44,13 +44,7 @@ String calculateRula(List<Pose> poses) {
         pose.landmarks[PoseLandmarkType.leftAnkle]!,
         'front',);
     
-    
-
-    jointListRula.insert(0, UpperArmSide);
-    jointListRula.insert(1, UpperArmFront);
-    jointListRula.insert(2, UpperArmAbove);
-    jointListRula.insert(3, RightAnkle);
-    jointListRula.insert(3, LeftAnkle);
+    jointListRula.add(RightAnkle);
     
     //<PoseLandmark>[leftShoulder, rightShoulder, leftWrist, rightWrist];
       
