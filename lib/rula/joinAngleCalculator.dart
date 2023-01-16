@@ -35,17 +35,19 @@ class Joint {
   late Point3d pointB;
   late Point3d pointC;
   late String view;
+  late String direction;
   late double angle;
 
-  Joint(PoseLandmark a, PoseLandmark b, PoseLandmark c, String view) {
+  Joint(PoseLandmark a, PoseLandmark b, PoseLandmark c, String view, String direction) {
     this.a = a;
     this.b = b;
     this.c = c;
     this.view = view;
+    this.direction = direction;
     this.pointA = new Point3d(this.a.x, this.a.y, this.a.z);
     this.pointB = new Point3d(this.b.x, this.b.y, this.b.z);
     this.pointC = new Point3d(this.c.x, this.c.y, this.c.z);
-    this.angle = calculateAngle2d(this.pointA, this.pointB, this.pointC, this.view);
+    this.angle = calculateAngle2d(this.pointA, this.pointB, this.pointC, this.view, this.direction);
   }
 
   @override
@@ -70,29 +72,32 @@ class Joint {
 }
 
 double calculateAngle2d(Point3d pointA, Point3d pointB,
-  Point3d pointC, String view) {
+  Point3d pointC, String view, String dummyPoint) {
   
-  Point3d newPoint = getDummyPoint('left', view, pointB);
+  Point3d newPoint = getDummyPoint('up', view, pointB);
   pointA.setX = newPoint.x;
   pointA.setY = newPoint.y;
-
+  
+  double radians;
   if (view == 'front') {
-    double radians = atan2(pointC.y - pointB.y, pointC.x - pointB.x) -
-        atan2(pointA.y - pointB.y, pointA.x - pointB.x);
-    double angle = (radians * 180.0 / pi).abs();
-    if (angle > 180.0) {
-      angle = 360 - angle;
-    }
-    return angle;
-  } else if (view == 'above') {
-    double radians = atan2(pointC.z - pointB.z, pointC.x - pointB.x) -
-        atan2(pointA.z - pointB.z, pointA.x - pointB.x);
-    double angle = (radians * 180.0 / pi).abs();
-    if (angle > 180.0) {
-      angle = 360 - angle;
-    }
-    return angle;
+    radians = atan2(pointC.y - pointB.y, pointC.x - pointB.x) -
+    atan2(pointA.y - pointB.y, pointA.x - pointB.x);
+  } 
+  else if (view == 'above') {
+    radians = atan2(pointC.z - pointB.z, pointC.x - pointB.x) -
+    atan2(pointA.z - pointB.z, pointA.x - pointB.x);
   }
+  else {
+    radians = atan2(pointC.z - pointB.z, pointC.x - pointB.x) -
+    atan2(pointA.z - pointB.z, pointA.x - pointB.x);
+  }
+  
+  
+  double angle = (radians * 180.0 / pi).abs();
+    if (angle > 180.0) {
+    angle = 360 - angle;
+  }
+  return angle;
   // } else if (view == 'side') {
   //   double radians = atan2(pointC.y - pointB.y, pointC.z - pointB.z) -
   //       atan2(pointA.y - pointB.y, pointA.z - pointB.z);
@@ -103,7 +108,6 @@ double calculateAngle2d(Point3d pointA, Point3d pointB,
   //   return angle;
   // }
 
-  return 0;
 }
 
 Point3d getDummyPoint (String direction, String view, Point3d oldPoint) {

@@ -4,9 +4,8 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 String calculateRula(List<Pose> poses) {
 
-  Joint? UpperArmSide;
+
   Joint? UpperArmFront;
-  Joint? UpperArmAbove;
 
   Joint? RightAnkle;
   Joint? LeftAnkle;
@@ -16,35 +15,15 @@ String calculateRula(List<Pose> poses) {
   //shoulder, elbow, wrist, hiplower, hipupper, neck
   for (final pose in poses) {
     
-
-    UpperArmSide = Joint(
-        pose.landmarks[PoseLandmarkType.rightShoulder]!,
-        pose.landmarks[PoseLandmarkType.rightElbow]!,
-        pose.landmarks[PoseLandmarkType.rightWrist]!,
-        'side',);
+    //TODO: DIRECTION : DONE, NOW TARGET VALUE OF ANGLE THAT TO BE DUMMY
     UpperArmFront = Joint(
         pose.landmarks[PoseLandmarkType.rightShoulder]!,
-        pose.landmarks[PoseLandmarkType.rightElbow]!,
-        pose.landmarks[PoseLandmarkType.rightWrist]!,
-        'front',);
-    UpperArmAbove = Joint(
         pose.landmarks[PoseLandmarkType.rightShoulder]!,
         pose.landmarks[PoseLandmarkType.rightElbow]!,
-        pose.landmarks[PoseLandmarkType.rightWrist]!,
-        'above',);
+        'front', 'up');
 
-    RightAnkle = Joint(
-        pose.landmarks[PoseLandmarkType.rightHip]!,
-        pose.landmarks[PoseLandmarkType.rightKnee]!,
-        pose.landmarks[PoseLandmarkType.rightAnkle]!,
-        'front',);
-    LeftAnkle = Joint(
-        pose.landmarks[PoseLandmarkType.leftHip]!,
-        pose.landmarks[PoseLandmarkType.leftKnee]!,
-        pose.landmarks[PoseLandmarkType.leftAnkle]!,
-        'front',);
     
-    jointListRula.add(RightAnkle);
+    jointListRula.add(UpperArmFront);
     
     //<PoseLandmark>[leftShoulder, rightShoulder, leftWrist, rightWrist];
       
