@@ -262,14 +262,15 @@ class _CameraViewState extends State<CameraView> {
                     ],
                   ),
                 ),
-                if (_image != null) ResultFlip(result: 'EXCELLENT'),
-                SizedBox(
-                  height: 20,
-                ),
-                if (_image != null) resultIconsSquared(),
-                SizedBox(
-                  height: 90,
-                ),
+                //TODO: DO THE JOINTS ANALYSIS
+                // if (_image != null) ResultFlip(result: 'EXCELLENT'),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // if (_image != null) resultIconsSquared(),
+                // SizedBox(
+                //   height: 90,
+                // ),
                 // if (_image != null) {
                 //   setState(() {
                 //     isFabVisible = true;
