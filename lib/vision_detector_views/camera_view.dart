@@ -265,17 +265,17 @@ class _CameraViewState extends State<CameraView> {
                 //TODO: DO THE JOINTS ANALYSIS
                 // if (_image != null) ResultFlip(result: 'EXCELLENT'),
                 // SizedBox(
-                //   height: 20,
+                //  height: 20,
                 // ),
                 // if (_image != null) resultIconsSquared(),
                 // SizedBox(
-                //   height: 90,
+                //  height: 90,
                 // ),
-                // if (_image != null) {
-                //   setState(() {
-                //     isFabVisible = true;
-                //   });
-                // }
+                //if (_image != null) {
+                //  setState(() {
+                //    isFabVisible = true;
+                //  });
+                //}
                 
                  if (_image != null)
                    Padding(
@@ -336,8 +336,6 @@ class _CameraViewState extends State<CameraView> {
   void getImgSize() async {
     File image = _image!; // Or any other way to get a File instance.
     var decodedImage = await decodeImageFromList(image.readAsBytesSync());
-    print(decodedImage.width);
-    print(decodedImage.height);
     _imgSize =
         Size(decodedImage.width.toDouble(), decodedImage.height.toDouble());
   }

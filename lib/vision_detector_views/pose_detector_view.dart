@@ -77,15 +77,13 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       //File image2 = new File(fileBits, fileName)
       File image = new File(inputImage.filePath!); // Or any other way to get a File instance.
       var decodedImage = await decodeImageFromList(image.readAsBytesSync());
-      print(decodedImage.width);
-      print(decodedImage.height);
       Size imgSize = Size(decodedImage.width.toDouble(), decodedImage.height.toDouble());
       //_text = 'file path: ${decodedImage.width} X ${decodedImage.height} ';
 
       final painter = PosePainter(poses, imgSize,
       InputImageRotation.rotation0deg);
       _customPaint = CustomPaint(painter: painter);
-      _text = 'Poses found ${calculateRula(poses)} \n ${inputImage}';
+      _text = 'Poses found \n${calculateRula(poses)} \n ${inputImage}';
       // TODO: set _customPaint to draw landmarks on top of image
     }
     _isBusy = false;

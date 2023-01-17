@@ -19,9 +19,11 @@ class Point3d {
   set setX(double x) {
     this.x = x;
   }
+
   set setY(double y) {
     this.y = y;
   }
+
   set setZ(double z) {
     this.z = z;
   }
@@ -38,7 +40,8 @@ class Joint {
   late String direction;
   late double angle;
 
-  Joint(PoseLandmark a, PoseLandmark b, PoseLandmark c, String view, String direction) {
+  Joint(PoseLandmark a, PoseLandmark b, PoseLandmark c, String view,
+      String direction) {
     this.a = a;
     this.b = b;
     this.c = c;
@@ -47,7 +50,8 @@ class Joint {
     this.pointA = new Point3d(this.a.x, this.a.y, this.a.z);
     this.pointB = new Point3d(this.b.x, this.b.y, this.b.z);
     this.pointC = new Point3d(this.c.x, this.c.y, this.c.z);
-    this.angle = calculateAngle2d(this.pointA, this.pointB, this.pointC, this.view, this.direction);
+    this.angle = calculateAngle2d(
+        this.pointA, this.pointB, this.pointC, this.view, this.direction);
   }
 
   @override
@@ -59,11 +63,14 @@ class Joint {
     Point3d c = this.pointC;
     double angle = this.angle;
 
-    returnValue = returnValue + a.x.toString() + '\n' + a.y.toString() + '\n';
-    returnValue = returnValue + b.x.toString() + '\n' + b.y.toString() + '\n';
-    returnValue = returnValue + c.x.toString() + '\n' + c.y.toString() + '\n';
+    returnValue =
+        returnValue + 'x: ' + a.x.toString() + '\ny: ' + a.y.toString() + '\n';
+    returnValue =
+        returnValue + 'x: ' + b.x.toString() + '\ny: ' + b.y.toString() + '\n';
+    returnValue =
+        returnValue + 'x: ' + c.x.toString() + '\ny: ' + c.y.toString() + '\n';
 
-    returnValue = returnValue + '\n $angle';
+    returnValue = returnValue + '\n $angle \n\n';
 
     //returnValue = returnValue + '\a: $a \nb: $b \nc: $c \nangle: $angle \n';
     // TODO: implement toString
@@ -71,32 +78,49 @@ class Joint {
   }
 }
 
-double calculateAngle2d(Point3d pointA, Point3d pointB,
-  Point3d pointC, String view, String dummyPoint) {
-  
-  Point3d newPoint = getDummyPoint('up', view, pointB);
-  pointA.setX = newPoint.x;
-  pointA.setY = newPoint.y;
-  
+double calculateAngle2d(Point3d pointA, Point3d pointB, Point3d pointC,
+    String view, String direction) {
+  // pointA.setX = 0;
+  // pointA.setY = 4;
+  // pointA.setZ = 0;
+  // pointB.setX = 0;
+  // pointB.setY = 0;
+  // pointB.setZ = 0;
+  // pointC.setX = 4;
+  // pointC.setY = 8;
+  // pointC.setZ = 0;
+
+  if (direction != 'none') {
+    Point3d newPoint = getDummyPoint(direction, view, pointB);
+    pointA.setX = newPoint.x;
+    pointA.setY = newPoint.y;
+    pointA.setZ = newPoint.z;
+  }
+
   double radians;
   if (view == 'front') {
     radians = atan2(pointC.y - pointB.y, pointC.x - pointB.x) -
-    atan2(pointA.y - pointB.y, pointA.x - pointB.x);
-  } 
-  else if (view == 'above') {
+        atan2(pointA.y - pointB.y, pointA.x - pointB.x);
+  } else if (view == 'above') {
     radians = atan2(pointC.z - pointB.z, pointC.x - pointB.x) -
-    atan2(pointA.z - pointB.z, pointA.x - pointB.x);
-  }
-  else {
+        atan2(pointA.z - pointB.z, pointA.x - pointB.x);
+  } else {
     radians = atan2(pointC.z - pointB.z, pointC.x - pointB.x) -
-    atan2(pointA.z - pointB.z, pointA.x - pointB.x);
+        atan2(pointA.z - pointB.z, pointA.x - pointB.x);
   }
-  
-  
-  double angle = (radians * 180.0 / pi).abs();
+  double angle;
+
+  if (direction == 'none') {
+    angle = (radians * 180.0 / pi).abs();
     if (angle > 180.0) {
-    angle = 360 - angle;
+      angle = 360 - angle;
+      return angle;
+    }
   }
+
+  angle = (radians * 180.0 / pi);
+  angle = 180 + angle;
+
   return angle;
   // } else if (view == 'side') {
   //   double radians = atan2(pointC.y - pointB.y, pointC.z - pointB.z) -
@@ -107,10 +131,9 @@ double calculateAngle2d(Point3d pointA, Point3d pointB,
   //   }
   //   return angle;
   // }
-
 }
 
-Point3d getDummyPoint (String direction, String view, Point3d oldPoint) {
+Point3d getDummyPoint(String direction, String view, Point3d oldPoint) {
   Point3d newPoint = new Point3d(0, 0, 0);
   double x, y, z;
 
@@ -118,19 +141,13 @@ Point3d getDummyPoint (String direction, String view, Point3d oldPoint) {
     if (direction == 'up') {
       newPoint.setX = oldPoint.x;
       newPoint.setY = oldPoint.y + 10;
-    }
-
-    else if (direction == 'down') {
+    } else if (direction == 'down') {
       newPoint.setX = oldPoint.x;
       newPoint.setY = oldPoint.y - 10;
-    }
-
-    else if (direction == 'left') {
+    } else if (direction == 'left') {
       newPoint.setX = oldPoint.x - 10;
       newPoint.setY = oldPoint.y;
-    }
-
-    else{
+    } else {
       newPoint.setX = oldPoint.x + 10;
       newPoint.setY = oldPoint.y;
     }
@@ -138,4 +155,3 @@ Point3d getDummyPoint (String direction, String view, Point3d oldPoint) {
 
   return newPoint;
 }
-

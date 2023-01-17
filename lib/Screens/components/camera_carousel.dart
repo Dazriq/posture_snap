@@ -87,8 +87,6 @@ imageAnimation(PageController animation, images, pagePosition) {
   return AnimatedBuilder(
     animation: animation,
     builder: (context, widget) {
-      print(pagePosition);
-
       return SizedBox(
         width: 200,
         height: 200,
