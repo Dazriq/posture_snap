@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'joinAngleCalculator.dart';
 import '../vision_detector_views/pose_detector_view.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import '../rula/result.dart';
 
-String calculateRula(List<Pose> poses) {
+String calculateRula(Result result, List<Pose> poses) {
   Joint? neckFrontUp;
-  Joint? upperArmFrontUp;
-  Joint? kneeFront;
-  Joint? trunkFront;
-
-  Joint? upperArmFront;
   Joint? trunkFrontDown;
-  Joint? upperArmAboveDown;
+  Joint? kneeFront;
+  Joint? upperArmFrontUp;
+  Joint? lowerArmFront;
+  Joint? wristFrontUp;
 
   List<Joint>? jointListRula = List<Joint>.empty(growable: true);
   //shoulder, elbow, wrist, hiplower, hipupper, neck
@@ -43,33 +42,35 @@ String calculateRula(List<Pose> poses) {
         pose.landmarks[PoseLandmarkType.leftElbow]!,
         'front',
         'up'); //done
-    upperArmFront = Joint(
+
+    lowerArmFront = Joint(
         pose.landmarks[PoseLandmarkType.leftShoulder]!,
         pose.landmarks[PoseLandmarkType.leftElbow]!,
         pose.landmarks[PoseLandmarkType.leftWrist]!,
         'front',
-        'up'); //done
-    upperArmAboveDown = Joint(
-        pose.landmarks[PoseLandmarkType.leftShoulder]!,
-        pose.landmarks[PoseLandmarkType.leftElbow]!,
-        pose.landmarks[PoseLandmarkType.leftShoulder]!,
-        'above',
+        'none'); //done
+    //TODO: change the right wrist to left
+    wristFrontUp = Joint(
+        pose.landmarks[PoseLandmarkType.leftWrist]!,
+        pose.landmarks[PoseLandmarkType.rightWrist]!,
+        pose.landmarks[PoseLandmarkType.rightIndex]!,
+        'front',
         'up');
 
     jointListRula.add(neckFrontUp); //correct
     jointListRula.add(trunkFrontDown); //correct
     jointListRula.add(kneeFront);
     jointListRula.add(upperArmFrontUp); //correct
+    jointListRula.add(lowerArmFront); //correct
+    jointListRula.add(wristFrontUp);
 
-    jointListRula.add(upperArmFront); //correct
-    jointListRula.add(upperArmAboveDown); //correct
     //jointListRula.add(UpperArmFrontDown);
 
     //<PoseLandmark>[leftShoulder, rightShoulder, leftWrist, rightWrist];
 
   }
 
-  checkRula(jointListRula);
+  checkRula(result, jointListRula);
 
   String returnValue = '';
   for (int i = 0; i < jointListRula.length; i++) {
@@ -78,7 +79,7 @@ String calculateRula(List<Pose> poses) {
   return returnValue;
 }
 
-int checkRula(List<Joint>? jointListRula) {
+int checkRula(Result result, List<Joint>? jointListRula) {
   int neckScore = 0;
   int trunkScore = 0;
   int kneeScore = 0;
@@ -98,7 +99,6 @@ int checkRula(List<Joint>? jointListRula) {
   print(
       '-----------------------------------------------------------------------------------------------------------');
   print('Neck Angle $neckAngle Score: $neckScore');
-
 
   //check trunk
   double trunkAngle = jointListRula[1].angle;
@@ -134,38 +134,80 @@ int checkRula(List<Joint>? jointListRula) {
   print('knee Angle $kneeAngle Score: $kneeScore');
 
   int scoreA = getScoreA(neckScore, trunkScore, kneeScore);
-  print(scoreA);
+  print('Score A: $scoreA');
 
-  //assume force/load score = 0 
+  //assume force/load score = 0
   int loadScore = 0;
+
 
   scoreA = scoreA + loadScore;
 
-  //scoreB ------------------------------------------------------------------------------------------------------------
+  //SCOREB ------------------------------------------------------------------------------------------------------------
+
+  //check upper arm
   double upperArmAngle = jointListRula[3].angle;
   int upperArmScore = 0;
   if (upperArmAngle < 90) {
     upperArmScore += 4;
-  }
-  else if (upperArmAngle > 90 && upperArmAngle < 135) {
+  } else if (upperArmAngle > 90 && upperArmAngle < 135) {
     upperArmScore += 3;
-  }
-  else if (upperArmAngle > 135 && upperArmAngle < 150) {
+  } else if (upperArmAngle > 135 && upperArmAngle < 150) {
     upperArmScore += 2;
-  }
-  else if (upperArmAngle > 150 && upperArmAngle < 190) {
+  } else if (upperArmAngle > 150 && upperArmAngle < 190) {
     upperArmScore += 1;
-  }
-  else if (upperArmAngle > 170) {
+  } else if (upperArmAngle > 190) {
     upperArmScore += 2;
   }
   print(
       '-----------------------------------------------------------------------------------------------------------');
   print('upperArm Angle $upperArmAngle Score: $upperArmScore');
 
+  //if shoulder raised
+  //if upper arm is abducted
+  //if arm is supported or person leaning
 
+  //check lower arm
+  double lowerArmAngle = jointListRula[4].angle;
+  int lowerArmScore = 0;
 
-  return 0;
+  if (lowerArmAngle > 120)
+    lowerArmScore += 2;
+  else if (lowerArmAngle > 80 && lowerArmAngle < 120)
+    lowerArmScore += 1;
+  else if (lowerArmAngle < 80) lowerArmScore += 2;
+
+  print(
+      '-----------------------------------------------------------------------------------------------------------');
+  print('lowerArm Angle $lowerArmAngle Score: $lowerArmScore');
+  //DONE
+
+  //check wrist
+  double wristAngle = jointListRula[5].angle;
+  int wristScore = 0;
+  if (wristAngle > 75 && wristAngle < 105)
+    wristScore += 1;
+  else if (wristAngle < 75)
+    wristScore += 2;
+  else if (wristAngle > 105) wristScore += 2;
+  //DONE
+  print(
+      '-----------------------------------------------------------------------------------------------------------');
+  print('wrist Angle $wristAngle Score: $wristScore');
+
+  int scoreB = getScoreB(upperArmScore, lowerArmScore, wristScore);
+  print('Score B: $scoreB');
+
+  //we assume the coupling score is 0
+  scoreB = scoreB + 0;
+
+  //calculate the scorec
+  int scoreC = getScoreC(scoreA, scoreB);
+  print('Score C: $scoreC');
+
+  //we assume that the body parts are repeated in small range actions
+  int rebaScore = scoreC + 1;
+  print('Reba Score: $rebaScore');
+  return rebaScore;
 }
 
 int getScoreA(int neckScore, int trunkScore, int kneeScore) {
@@ -414,4 +456,640 @@ int getScoreA(int neckScore, int trunkScore, int kneeScore) {
   }
 
   return scoreA;
+}
+
+int getScoreB(int upperArmScore, int lowerArmScore, int wristScore) {
+  int scoreB = 0;
+  switch (lowerArmScore) {
+    case 1:
+      switch (wristScore) {
+        case 1:
+          switch (upperArmScore) {
+            case 1:
+              scoreB += 1;
+              break;
+            case 2:
+              scoreB += 1;
+              break;
+            case 3:
+              scoreB += 3;
+              break;
+            case 4:
+              scoreB += 4;
+              break;
+            case 5:
+              scoreB += 6;
+              break;
+            case 6:
+              scoreB += 7;
+              break;
+          }
+          break;
+        case 2:
+          switch (upperArmScore) {
+            case 1:
+              scoreB += 2;
+              break;
+            case 2:
+              scoreB += 2;
+              break;
+            case 3:
+              scoreB += 4;
+              break;
+            case 4:
+              scoreB += 5;
+              break;
+            case 5:
+              scoreB += 7;
+              break;
+            case 6:
+              scoreB += 8;
+              break;
+          }
+          break;
+        case 3:
+          switch (upperArmScore) {
+            case 1:
+              scoreB += 2;
+              break;
+            case 2:
+              scoreB += 3;
+              break;
+            case 3:
+              scoreB += 5;
+              break;
+            case 4:
+              scoreB += 5;
+              break;
+            case 5:
+              scoreB += 8;
+              break;
+            case 6:
+              scoreB += 8;
+              break;
+          }
+          break;
+      }
+      break;
+    case 2:
+      switch (wristScore) {
+        case 1:
+          switch (upperArmScore) {
+            case 1:
+              scoreB += 1;
+              break;
+            case 2:
+              scoreB += 2;
+              break;
+            case 3:
+              scoreB += 4;
+              break;
+            case 4:
+              scoreB += 5;
+              break;
+            case 5:
+              scoreB += 7;
+              break;
+            case 6:
+              scoreB += 8;
+              break;
+          }
+          break;
+        case 2:
+          switch (upperArmScore) {
+            case 1:
+              scoreB += 2;
+              break;
+            case 2:
+              scoreB += 3;
+              break;
+            case 3:
+              scoreB += 5;
+              break;
+            case 4:
+              scoreB += 6;
+              break;
+            case 5:
+              scoreB += 8;
+              break;
+            case 6:
+              scoreB += 9;
+              break;
+          }
+          break;
+        case 3:
+          switch (upperArmScore) {
+            case 1:
+              scoreB += 3;
+              break;
+            case 2:
+              scoreB += 4;
+              break;
+            case 3:
+              scoreB += 5;
+              break;
+            case 4:
+              scoreB += 7;
+              break;
+            case 5:
+              scoreB += 8;
+              break;
+            case 6:
+              scoreB += 9;
+              break;
+          }
+          break;
+      }
+      break;
+  }
+  return scoreB;
+}
+
+int getScoreC(int scoreA, int scoreB) {
+  int scoreC = 0;
+
+  switch (scoreB) {
+    case 1:
+      switch (scoreA) {
+        case 1:
+          scoreC += 1;
+          break;
+        case 2:
+          scoreC += 1;
+          break;
+        case 3:
+          scoreC += 2;
+          break;
+        case 4:
+          scoreC += 3;
+          break;
+        case 5:
+          scoreC += 4;
+          break;
+        case 6:
+          scoreC += 6;
+          break;
+        case 7:
+          scoreC += 7;
+          break;
+        case 8:
+          scoreC += 8;
+          break;
+        case 9:
+          scoreC += 9;
+          break;
+        case 10:
+          scoreC += 10;
+          break;
+        case 11:
+          scoreC += 11;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 2:
+      switch (scoreA) {
+        case 1:
+          scoreC += 1;
+          break;
+        case 2:
+          scoreC += 2;
+          break;
+        case 3:
+          scoreC += 3;
+          break;
+        case 4:
+          scoreC += 4;
+          break;
+        case 5:
+          scoreC += 4;
+          break;
+        case 6:
+          scoreC += 6;
+          break;
+        case 7:
+          scoreC += 7;
+          break;
+        case 8:
+          scoreC += 8;
+          break;
+        case 9:
+          scoreC += 9;
+          break;
+        case 10:
+          scoreC += 10;
+          break;
+        case 11:
+          scoreC += 11;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 3:
+      switch (scoreA) {
+        case 1:
+          scoreC += 1;
+          break;
+        case 2:
+          scoreC += 2;
+          break;
+        case 3:
+          scoreC += 3;
+          break;
+        case 4:
+          scoreC += 4;
+          break;
+        case 5:
+          scoreC += 4;
+          break;
+        case 6:
+          scoreC += 6;
+          break;
+        case 7:
+          scoreC += 7;
+          break;
+        case 8:
+          scoreC += 8;
+          break;
+        case 9:
+          scoreC += 9;
+          break;
+        case 10:
+          scoreC += 10;
+          break;
+        case 11:
+          scoreC += 11;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 4:
+      switch (scoreA) {
+        case 1:
+          scoreC += 2;
+          break;
+        case 2:
+          scoreC += 3;
+          break;
+        case 3:
+          scoreC += 3;
+          break;
+        case 4:
+          scoreC += 4;
+          break;
+        case 5:
+          scoreC += 5;
+          break;
+        case 6:
+          scoreC += 7;
+          break;
+        case 7:
+          scoreC += 8;
+          break;
+        case 8:
+          scoreC += 9;
+          break;
+        case 9:
+          scoreC += 10;
+          break;
+        case 10:
+          scoreC += 11;
+          break;
+        case 11:
+          scoreC += 11;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 5:
+      switch (scoreA) {
+        case 1:
+          scoreC += 3;
+          break;
+        case 2:
+          scoreC += 4;
+          break;
+        case 3:
+          scoreC += 4;
+          break;
+        case 4:
+          scoreC += 5;
+          break;
+        case 5:
+          scoreC += 6;
+          break;
+        case 6:
+          scoreC += 8;
+          break;
+        case 7:
+          scoreC += 9;
+          break;
+        case 8:
+          scoreC += 10;
+          break;
+        case 9:
+          scoreC += 10;
+          break;
+        case 10:
+          scoreC += 11;
+          break;
+        case 11:
+          scoreC += 12;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 6:
+      switch (scoreA) {
+        case 1:
+          scoreC += 3;
+          break;
+        case 2:
+          scoreC += 4;
+          break;
+        case 3:
+          scoreC += 5;
+          break;
+        case 4:
+          scoreC += 6;
+          break;
+        case 5:
+          scoreC += 7;
+          break;
+        case 6:
+          scoreC += 8;
+          break;
+        case 7:
+          scoreC += 9;
+          break;
+        case 8:
+          scoreC += 10;
+          break;
+        case 9:
+          scoreC += 10;
+          break;
+        case 10:
+          scoreC += 11;
+          break;
+        case 11:
+          scoreC += 12;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 7:
+      switch (scoreA) {
+        case 1:
+          scoreC += 4;
+          break;
+        case 2:
+          scoreC += 5;
+          break;
+        case 3:
+          scoreC += 6;
+          break;
+        case 4:
+          scoreC += 7;
+          break;
+        case 5:
+          scoreC += 8;
+          break;
+        case 6:
+          scoreC += 9;
+          break;
+        case 7:
+          scoreC += 9;
+          break;
+        case 8:
+          scoreC += 10;
+          break;
+        case 9:
+          scoreC += 11;
+          break;
+        case 10:
+          scoreC += 11;
+          break;
+        case 11:
+          scoreC += 12;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 8:
+      switch (scoreA) {
+        case 1:
+          scoreC += 5;
+          break;
+        case 2:
+          scoreC += 6;
+          break;
+        case 3:
+          scoreC += 7;
+          break;
+        case 4:
+          scoreC += 8;
+          break;
+        case 5:
+          scoreC += 8;
+          break;
+        case 6:
+          scoreC += 9;
+          break;
+        case 7:
+          scoreC += 10;
+          break;
+        case 8:
+          scoreC += 10;
+          break;
+        case 9:
+          scoreC += 11;
+          break;
+        case 10:
+          scoreC += 12;
+          break;
+        case 11:
+          scoreC += 12;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 9:
+      switch (scoreA) {
+        case 1:
+          scoreC += 6;
+          break;
+        case 2:
+          scoreC += 6;
+          break;
+        case 3:
+          scoreC += 7;
+          break;
+        case 4:
+          scoreC += 8;
+          break;
+        case 5:
+          scoreC += 9;
+          break;
+        case 6:
+          scoreC += 10;
+          break;
+        case 7:
+          scoreC += 10;
+          break;
+        case 8:
+          scoreC += 10;
+          break;
+        case 9:
+          scoreC += 11;
+          break;
+        case 10:
+          scoreC += 12;
+          break;
+        case 11:
+          scoreC += 12;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 10:
+      switch (scoreA) {
+        case 1:
+          scoreC += 7;
+          break;
+        case 2:
+          scoreC += 7;
+          break;
+        case 3:
+          scoreC += 8;
+          break;
+        case 4:
+          scoreC += 9;
+          break;
+        case 5:
+          scoreC += 9;
+          break;
+        case 6:
+          scoreC += 10;
+          break;
+        case 7:
+          scoreC += 11;
+          break;
+        case 8:
+          scoreC += 11;
+          break;
+        case 9:
+          scoreC += 12;
+          break;
+        case 10:
+          scoreC += 12;
+          break;
+        case 11:
+          scoreC += 12;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 11:
+      switch (scoreA) {
+        case 1:
+          scoreC += 7;
+          break;
+        case 2:
+          scoreC += 7;
+          break;
+        case 3:
+          scoreC += 8;
+          break;
+        case 4:
+          scoreC += 9;
+          break;
+        case 5:
+          scoreC += 9;
+          break;
+        case 6:
+          scoreC += 10;
+          break;
+        case 7:
+          scoreC += 11;
+          break;
+        case 8:
+          scoreC += 11;
+          break;
+        case 9:
+          scoreC += 12;
+          break;
+        case 10:
+          scoreC += 12;
+          break;
+        case 11:
+          scoreC += 12;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+    case 12:
+      switch (scoreA) {
+        case 1:
+          scoreC += 7;
+          break;
+        case 2:
+          scoreC += 8;
+          break;
+        case 3:
+          scoreC += 8;
+          break;
+        case 4:
+          scoreC += 9;
+          break;
+        case 5:
+          scoreC += 9;
+          break;
+        case 6:
+          scoreC += 10;
+          break;
+        case 7:
+          scoreC += 11;
+          break;
+        case 8:
+          scoreC += 11;
+          break;
+        case 9:
+          scoreC += 12;
+          break;
+        case 10:
+          scoreC += 12;
+          break;
+        case 11:
+          scoreC += 12;
+          break;
+        case 12:
+          scoreC += 12;
+          break;
+      }
+      break;
+  }
+
+  return scoreC;
 }
