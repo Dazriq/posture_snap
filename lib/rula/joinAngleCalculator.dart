@@ -64,12 +64,11 @@ class Joint {
     double angle = this.angle;
 
     returnValue =
-        returnValue + 'x: ' + a.x.toString() + '\ny: ' + a.y.toString() + '\n';
+        returnValue + 'x: ' + a.x.toString() + '\ny: ' + a.y.toString() + '\nz:' + c.z.toString() + '\n';
     returnValue =
-        returnValue + 'x: ' + b.x.toString() + '\ny: ' + b.y.toString() + '\n';
+        returnValue + 'x: ' + b.x.toString() + '\ny: ' + b.y.toString() + '\nz:' + c.z.toString() + '\n';
     returnValue =
-        returnValue + 'x: ' + c.x.toString() + '\ny: ' + c.y.toString() + '\n';
-
+        returnValue + 'x: ' + c.x.toString() + '\ny: ' + c.y.toString() + '\nz:' + c.z.toString() + '\n';
     returnValue = returnValue + '\n $angle \n\n';
 
     //returnValue = returnValue + '\a: $a \nb: $b \nc: $c \nangle: $angle \n';
@@ -114,12 +113,12 @@ double calculateAngle2d(Point3d pointA, Point3d pointB, Point3d pointC,
     angle = (radians * 180.0 / pi).abs();
     if (angle > 180.0) {
       angle = 360 - angle;
-      return angle;
     }
+    return angle;
   }
 
   angle = (radians * 180.0 / pi);
-  angle = 180 + angle;
+  angle = 180 - angle;
 
   return angle;
   // } else if (view == 'side') {
@@ -150,6 +149,22 @@ Point3d getDummyPoint(String direction, String view, Point3d oldPoint) {
     } else {
       newPoint.setX = oldPoint.x + 10;
       newPoint.setY = oldPoint.y;
+    }
+  }
+
+  if (view == 'above') {
+    if (direction == 'up') {
+      newPoint.setZ = oldPoint.z;
+      newPoint.setX = oldPoint.x + 10;
+    } else if (direction == 'down') {
+      newPoint.setZ = oldPoint.z;
+      newPoint.setX = oldPoint.x - 10;
+    } else if (direction == 'left') {
+      newPoint.setZ = oldPoint.z - 10;
+      newPoint.setX = oldPoint.x;
+    } else {
+      newPoint.setZ = oldPoint.z + 10;
+      newPoint.setX = oldPoint.x;
     }
   }
 

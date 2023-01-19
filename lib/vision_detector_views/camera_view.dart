@@ -263,14 +263,14 @@ class _CameraViewState extends State<CameraView> {
                   ),
                 ),
                 //TODO: DO THE JOINTS ANALYSIS
-                // if (_image != null) ResultFlip(result: 'EXCELLENT'),
-                // SizedBox(
-                //  height: 20,
-                // ),
-                // if (_image != null) resultIconsSquared(),
-                // SizedBox(
-                //  height: 90,
-                // ),
+                if (_image != null) ResultFlip(result: 'EXCELLENT'),
+                SizedBox(
+                 height: 20,
+                ),
+                if (_image != null) resultIconsSquared(),
+                SizedBox(
+                 height: 90,
+                ),
                 //if (_image != null) {
                 //  setState(() {
                 //    isFabVisible = true;
@@ -280,8 +280,8 @@ class _CameraViewState extends State<CameraView> {
                  if (_image != null)
                    Padding(
                      padding: const EdgeInsets.only(bottom: 100),
-                     child: Text(
-                         '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
+                    //  child: Text(
+                    //      '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
                      //path of image = _path
                    ),
               ],
