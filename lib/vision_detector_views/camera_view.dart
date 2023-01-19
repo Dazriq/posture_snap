@@ -266,27 +266,27 @@ class _CameraViewState extends State<CameraView> {
                   ),
                 ),
                 //TODO: DO THE JOINTS ANALYSIS
-                
+
                 if (_image != null) ResultFlip(result: widget.result),
                 SizedBox(
-                 height: 20,
+                  height: 20,
                 ),
-                if (_image != null) resultIconsSquared(),
+                if (_image != null) resultIconsSquared(widget.result!),
                 SizedBox(
-                 height: 90,
+                  height: 90,
                 ),
                 //if (_image != null) {
                 //  setState(() {
                 //    isFabVisible = true;
                 //  });
                 //}
-                
-                 if (_image != null)
-                   Padding(
-                     padding: const EdgeInsets.only(bottom: 100),
-                     child: Text(
-                         '${_path == null ? '' : ''}\n\n${widget.result.toString() ?? ''}'),
-                   ),
+
+                if (_image != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 100),
+                    child: Text(
+                        '${_path == null ? '' : ''}\n\n${widget.result.toString() ?? ''}'),
+                  ),
               ],
             ),
           ),
@@ -295,7 +295,13 @@ class _CameraViewState extends State<CameraView> {
     );
   }
 
-  Widget resultIconsSquared() {
+  Widget resultIconsSquared(Result result) {
+    double neckAngle = widget.result!.neckAngle!;
+    double upperArmAngle = widget.result!.upperArmAngle!;
+    double lowerArmAngle = widget.result!.lowerArmAngle!;
+    double wristAngle = widget.result!.wristAngle!;
+    double trunkAngle = widget.result!.trunkAngle!;
+
     return Container(
         width: MediaQuery.of(context).size.width * 0.95,
         child: Column(
@@ -305,14 +311,17 @@ class _CameraViewState extends State<CameraView> {
                   icon: 'neck.png',
                   title: 'NECK',
                   result: 'FAIR',
-                  angle: 25.32532),
+                  angle: double.parse((neckAngle).toStringAsFixed(2))),
               CardFlip(
                   icon: 'shoulder.png',
                   title: 'SHOULDER',
                   result: 'EXCELLENT',
-                  angle: 73.654),
+                  angle: double.parse((upperArmAngle).toStringAsFixed(2))),
               CardFlip(
-                  icon: 'arm.png', title: 'ARM', result: 'GOOD', angle: 55.879)
+                  icon: 'arm.png',
+                  title: 'ARM',
+                  result: 'GOOD',
+                  angle: double.parse((lowerArmAngle).toStringAsFixed(2))),
             ]),
             SizedBox(height: 10),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -320,12 +329,14 @@ class _CameraViewState extends State<CameraView> {
                   icon: 'wrist.png',
                   title: 'WRIST',
                   result: 'EXCELLENT',
-                  angle: 69.93),
+                  angle: double.parse(
+                      (wristAngle).toStringAsFixed(2))),
               CardFlip(
                   icon: 'trunk.png',
                   title: 'TRUNK',
                   result: 'GOOD',
-                  angle: 170.02),
+                  angle: double.parse(
+                      (trunkAngle).toStringAsFixed(2))),
               CardFlip(
                   icon: 'fullBody.png',
                   title: 'OTHERS',
