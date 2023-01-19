@@ -266,7 +266,8 @@ class _CameraViewState extends State<CameraView> {
                   ),
                 ),
                 //TODO: DO THE JOINTS ANALYSIS
-                if (_image != null) ResultFlip(result: 'EXCELLENT'),
+                
+                if (_image != null) ResultFlip(result: widget.result),
                 SizedBox(
                  height: 20,
                 ),
@@ -283,9 +284,8 @@ class _CameraViewState extends State<CameraView> {
                  if (_image != null)
                    Padding(
                      padding: const EdgeInsets.only(bottom: 100),
-                    //  child: Text(
-                    //      '${_path == null ? '' : ''}\n\n${widget.text ?? ''}'),
-                     //path of image = _path
+                     child: Text(
+                         '${_path == null ? '' : ''}\n\n${widget.result.toString() ?? ''}'),
                    ),
               ],
             ),

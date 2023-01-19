@@ -1,14 +1,15 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../rula/result.dart';
 
 class ResultFlip extends StatefulWidget {
-  const ResultFlip({
+  ResultFlip({
     Key? key,
     required this.result,
   }) : super(key: key);
 
-  final String result;
+  Result? result;
   @override
   State<ResultFlip> createState() => _ResultFlipState();
 }
@@ -19,25 +20,18 @@ class _ResultFlipState extends State<ResultFlip> {
     Size size = MediaQuery.of(context).size;
 
     int colorCode = 0XFF38E54D;
-    switch (widget.result) {
-      case 'EXCELLENT':
-        colorCode = 0XFF38E54D;
-        break;
+    int? rebaScore = widget.result!.rebaScore;
 
-      case 'GOOD':
+    if (rebaScore != null) {
+      if (rebaScore >= 1 && rebaScore <= 3) {
         colorCode = 0XFFFCE700;
-        break;
-
-      case 'FAIR':
+      } else if (rebaScore >= 4 && rebaScore <= 7) {
+        colorCode = 0XFFFCE700;
+      } else if (rebaScore >= 8 && rebaScore <= 10) {
         colorCode = 0XFFFF7000;
-        break;
-
-      case 'POOR':
+      } else if (rebaScore >= 11) {
         colorCode = 0XFFDC3535;
-        break;
-
-      default:
-        break;
+      }
     }
     //return card(colorCode, path);
     // returning MaterialApp
@@ -45,14 +39,14 @@ class _ResultFlipState extends State<ResultFlip> {
       direction: FlipDirection.VERTICAL,
       speed: 400,
       // front of the card
-      front: overallResultFront(widget.result),
+      front: overallResultFront(widget.result!.rebaScore),
 
       // back of the card
-      back: overallResultBack(widget.result),
+      back: overallResultBack(),
     );
   }
 
-  Widget overallResultBack(String result) {
+  Widget overallResultBack() {
     int colorCode = 0XFF555555;
     int green = 0XFF38E54D;
     int yellow = 0XFFFCE700;
@@ -118,7 +112,9 @@ class _ResultFlipState extends State<ResultFlip> {
                 color: Colors.white,
               ),
             ],
-            SizedBox(height: 10,), 
+            SizedBox(
+              height: 10,
+            ),
             Text(
               result,
               style: GoogleFonts.montserrat(
@@ -132,35 +128,34 @@ class _ResultFlipState extends State<ResultFlip> {
         ));
   }
 
-  Widget overallResultFront(title) {
+  Widget overallResultFront(int? rebaScore) {
     int colorCode = 0XFF555555;
     String message = '';
-    switch (title) {
-      case 'EXCELLENT':
-        colorCode = 0XFF38E54D;
-        message = 'You have an excellent posture';
+    int score = 0;
+    String title = '';
 
-        break;
-
-      case 'GOOD':
+    if (rebaScore != null) {
+      if (rebaScore >= 1 && rebaScore <= 3) {
         colorCode = 0XFFFCE700;
+        score = 1;
+        message = 'You have an excellent posture';
+        title += 'EXCELLENT';
+      } else if (rebaScore >= 4 && rebaScore <= 7) {
+        colorCode = 0XFFFCE700;
+        score = 2;
         message = 'You have a good posture';
-
-        break;
-
-      case 'FAIR':
+        title += 'GOOD';
+      } else if (rebaScore >= 8 && rebaScore <= 10) {
         colorCode = 0XFFFF7000;
+        score = 3;
         message = 'You have a fair posture';
-
-        break;
-
-      case 'POOR':
+        title += 'FAIR';
+      } else if (rebaScore >= 11) {
         colorCode = 0XFFDC3535;
+        score = 4;
         message = 'Please fix your posture';
-        break;
-
-      default:
-        break;
+        title += 'POOR';
+      }
     }
 
     return Container(
@@ -181,19 +176,19 @@ class _ResultFlipState extends State<ResultFlip> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (title == 'EXCELLENT') ...[
+          if (score == 1) ...[
             Icon(
               Icons.sentiment_very_satisfied_outlined,
               size: 90,
               color: Colors.white,
             ),
-          ] else if (title == 'GOOD') ...[
+          ] else if (score == 2) ...[
             Icon(
               Icons.sentiment_very_satisfied,
               size: 90,
               color: Colors.white,
             ),
-          ] else if (title == 'FAIR') ...[
+          ] else if (score == 3) ...[
             Icon(
               Icons.sentiment_neutral,
               size: 90,

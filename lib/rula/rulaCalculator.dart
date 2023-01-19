@@ -208,6 +208,9 @@ int checkRula(Result result, List<Joint>? jointListRula) {
   print('Reba Score: $rebaScore');
 
   //RESET THE Reba
+  result.setRebaScore = rebaScore;
+  result.setNeckAngle = neckAngle;
+  result.setNeckScore = neckScore;
   result.setTrunkScore = trunkScore;
   result.setTrunkAngle = trunkAngle;
   result.setKneeScore = kneeScore;

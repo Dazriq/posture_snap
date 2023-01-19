@@ -1,7 +1,7 @@
 class Result {
   int? rebaScore;
   int? neckScore;
-  int? neckAngle;
+  double? neckAngle;
   int? trunkScore;
   double? trunkAngle;
   int? kneeScore;
@@ -15,21 +15,21 @@ class Result {
 
   String toString() {
     String returnValue = "";
+    returnValue += 'Reba Score $rebaScore\n';
     returnValue += 'Neck Angle $neckAngle Score: $neckScore\n';
     returnValue += 'trunk Angle $trunkAngle Score: $trunkScore\n';
     returnValue += 'knee Angle $kneeAngle Score: $kneeScore\n';
     returnValue += 'upperArm Angle $upperArmAngle Score: $upperArmScore\n';
     returnValue += 'lowerArm Angle $lowerArmAngle Score: $lowerArmScore\n';
     returnValue += 'wrist Angle $wristAngle Score: $wristScore\n';
-    returnValue += 'wrist Angle $wristAngle Score: $wristScore';
 
     return returnValue;
   }
 
   Result(
-      {this.neckScore,
+      {required this.neckScore,
       required this.neckAngle,
-      this.rebaScore,
+      required this.rebaScore,
       required this.trunkScore,
       required this.trunkAngle,
       required this.kneeScore,
@@ -55,6 +55,19 @@ class Result {
     wristAngle = json['wristAngle'];
   }
   // setters
+  set setRebaScore(int rebaScore) {
+    this.rebaScore = rebaScore;
+  }
+
+  set setNeckScore(int neckScore) {
+    this.neckScore = neckScore;
+  }
+
+  set setNeckAngle (double neckAngle) {
+    this.neckAngle = neckAngle;
+  }
+
+
   set setTrunkScore(int trunkScore) {
     this.trunkScore = trunkScore;
   }
