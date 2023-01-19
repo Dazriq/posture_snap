@@ -13,6 +13,7 @@ import 'package:ergo_snap/components/result_flip.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Screens/components/camera_carousel.dart';
 import '../main.dart';
+import '../rula/result.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
@@ -22,6 +23,7 @@ class CameraView extends StatefulWidget {
       required this.title,
       required this.customPaint,
       this.text,
+      required this.result,
       required this.onImage,
       this.onScreenModeChanged,
       this.initialDirection = CameraLensDirection.back})
@@ -30,6 +32,7 @@ class CameraView extends StatefulWidget {
   final String title;
   final CustomPaint? customPaint;
   final String? text;
+  Result? result;
   final Function(InputImage inputImage) onImage;
   final Function(ScreenMode mode)? onScreenModeChanged;
   final CameraLensDirection initialDirection;

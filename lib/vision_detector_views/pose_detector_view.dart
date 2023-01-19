@@ -38,6 +38,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       title: 'Pose Detector',
       customPaint: _customPaint,
       text: _text,
+      result: _result,
       onImage: (inputImage) {
         processImage(inputImage);
       },
@@ -85,9 +86,11 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final painter = PosePainter(poses, imgSize,
       InputImageRotation.rotation0deg);
       _customPaint = CustomPaint(painter: painter);
-      Result result = new Result(rebaScore: 0, trunkScore: 0, trunkAngle: 0, kneeScore: 0, kneeAngle: 0, upperArmScore: 0, upperArmAngle: 0, lowerArmScore: 0, lowerArmAngle: 0, wristScore: 0, wristAngle: 0);
-
+      Result result = new Result(neckAngle: 0, neckScore: 0, rebaScore: 0, trunkScore: 0, trunkAngle: 0, kneeScore: 0, kneeAngle: 0, upperArmScore: 0, upperArmAngle: 0, lowerArmScore: 0, lowerArmAngle: 0, wristScore: 0, wristAngle: 0);
+      
       _text = 'Poses found \n${calculateRula(result, poses)} \n ${inputImage}';
+      _result = result;
+      print(result);
       //_result = calculateRula()
       // TODO: set _customPaint to draw landmarks on top of image
     }

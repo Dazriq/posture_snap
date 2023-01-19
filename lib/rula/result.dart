@@ -1,5 +1,7 @@
 class Result {
   int? rebaScore;
+  int? neckScore;
+  int? neckAngle;
   int? trunkScore;
   double? trunkAngle;
   int? kneeScore;
@@ -11,7 +13,33 @@ class Result {
   int? wristScore;
   double? wristAngle;
 
-  Result({required this.rebaScore, required this.trunkScore, required this.trunkAngle, required this.kneeScore, required this.kneeAngle, required this.upperArmScore, required this.upperArmAngle, required this.lowerArmScore, required this.lowerArmAngle, required this.wristScore, required this.wristAngle});
+  String toString() {
+    String returnValue = "";
+    returnValue += 'Neck Angle $neckAngle Score: $neckScore\n';
+    returnValue += 'trunk Angle $trunkAngle Score: $trunkScore\n';
+    returnValue += 'knee Angle $kneeAngle Score: $kneeScore\n';
+    returnValue += 'upperArm Angle $upperArmAngle Score: $upperArmScore\n';
+    returnValue += 'lowerArm Angle $lowerArmAngle Score: $lowerArmScore\n';
+    returnValue += 'wrist Angle $wristAngle Score: $wristScore\n';
+    returnValue += 'wrist Angle $wristAngle Score: $wristScore';
+
+    return returnValue;
+  }
+
+  Result(
+      {this.neckScore,
+      required this.neckAngle,
+      this.rebaScore,
+      required this.trunkScore,
+      required this.trunkAngle,
+      required this.kneeScore,
+      required this.kneeAngle,
+      required this.upperArmScore,
+      required this.upperArmAngle,
+      required this.lowerArmScore,
+      required this.lowerArmAngle,
+      required this.wristScore,
+      required this.wristAngle});
 
   // constructor
   Result.fromJson(Map<String, dynamic> json) {
@@ -26,86 +54,44 @@ class Result {
     wristScore = json['wristScore'];
     wristAngle = json['wristAngle'];
   }
-
-  // getters
-  int getTrunkScore() {
-    return this.trunkScore!;
-  }
-
-  double getTrunkAngle() {
-    return this.trunkAngle!;
-  }
-
-  int getKneeScore() {
-    return this.kneeScore!;
-  }
-
-  double getKneeAngle() {
-    return this.kneeAngle!;
-  }
-
-  int getUpperArmScore() {
-    return this.upperArmScore!;
-  }
-
-  double getUpperArmAngle() {
-    return this.upperArmAngle!;
-  }
-
-  int getLowerArmScore() {
-    return this.lowerArmScore!;
-  }
-
-  double getLowerArmAngle() {
-    return this.lowerArmAngle!;
-  }
-
-  int getWristScore() {
-    return this.wristScore!;
-  }
-
-  double getWristAngle() {
-    return this.wristAngle!;
-  }
-
   // setters
-  void setTrunkScore(int score) {
-    this.trunkScore = score;
+  set setTrunkScore(int trunkScore) {
+    this.trunkScore = trunkScore;
   }
 
-  void setTrunkAngle(double angle) {
-    this.trunkAngle = angle;
+  set setTrunkAngle(double trunkAngle) {
+    this.trunkAngle = trunkAngle;
   }
 
-  void setKneeScore(int score) {
-    this.kneeScore = score;
+  set setKneeScore(int kneeScore) {
+    this.kneeScore = kneeScore;
   }
 
-  void setKneeAngle(double angle) {
-    this.kneeAngle = angle;
+  set setKneeAngle(double kneeAngle) {
+    this.kneeAngle = kneeAngle;
   }
 
-  void setUpperArmScore(int score) {
-    this.upperArmScore = score;
+  set setUpperArmScore(int upperArmScore) {
+    this.upperArmScore = upperArmScore;
   }
 
-  void setUpperArmAngle(double angle) {
-    this.upperArmAngle = angle;
+  set setUpperArmAngle(double upperArmAngle) {
+    this.upperArmAngle = upperArmAngle;
   }
 
-  void setLowerArmScore(int score) {
-    this.lowerArmScore = score;
+  set setLowerArmScore(int lowerArmScore) {
+    this.lowerArmScore = lowerArmScore;
   }
 
-  void setLowerArmAngle(double angle) {
-    this.lowerArmAngle = angle;
+  set setLowerArmAngle(double lowerArmAngle) {
+    this.lowerArmAngle = lowerArmAngle;
   }
 
-  void setWristScore(int score) {
-    this.wristScore = score;
+  set setWristScore(int wristScore) {
+    this.wristScore = wristScore;
   }
 
-  void setWristAngle(double angle) {
-    this.wristAngle;
+  set setWristAngle(double wristAngle) {
+    this.wristAngle = wristAngle;
   }
 }

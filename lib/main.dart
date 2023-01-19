@@ -6,6 +6,7 @@ import 'vision_detector_views/pose_detector_view.dart';
 
 List<CameraDescription> cameras = [];
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

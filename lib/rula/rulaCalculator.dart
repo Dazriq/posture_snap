@@ -139,7 +139,6 @@ int checkRula(Result result, List<Joint>? jointListRula) {
   //assume force/load score = 0
   int loadScore = 0;
 
-
   scoreA = scoreA + loadScore;
 
   //SCOREB ------------------------------------------------------------------------------------------------------------
@@ -207,6 +206,20 @@ int checkRula(Result result, List<Joint>? jointListRula) {
   //we assume that the body parts are repeated in small range actions
   int rebaScore = scoreC + 1;
   print('Reba Score: $rebaScore');
+
+  //RESET THE Reba
+  result.setTrunkScore = trunkScore;
+  result.setTrunkAngle = trunkAngle;
+  result.setKneeScore = kneeScore;
+  result.setKneeAngle = kneeAngle;
+  result.setUpperArmScore = upperArmScore;
+  result.setUpperArmAngle = upperArmAngle;
+  result.setLowerArmScore = lowerArmScore;
+  result.setLowerArmAngle = lowerArmAngle;
+  result.setWristScore = wristScore;
+  result.setWristAngle = wristAngle;
+
+
   return rebaScore;
 }
 
