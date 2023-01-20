@@ -90,6 +90,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       
       _text = 'Poses found \n${calculateRula(result, poses)} \n ${inputImage}';
       _result = result;
+      print(result);
       //_result = calculateRula()
       // TODO: set _customPaint to draw landmarks on top of image
     }

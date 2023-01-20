@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ergo_snap/components/rounded_button.dart';
 
 class AboutComponent extends StatelessWidget {
-  const AboutComponent({
+  AboutComponent({
     Key? key,
     required this.size,
     required this.defaultLoginSize,
@@ -16,6 +16,12 @@ class AboutComponent extends StatelessWidget {
 
   final Size size;
   final double defaultLoginSize;
+  final Shader _linearGradient = const LinearGradient(
+      colors: [Color(0XFFFF3B9D), Color(0XFFa25ce0)],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+      stops: [0.3, 0.7],
+    ).createShader(const Rect.fromLTWH(0.0, 0.0, 320.0, 80.0));
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +40,19 @@ class AboutComponent extends StatelessWidget {
                   height: 30,
                 ),
                 backButton(context),
-                h1(context, 'What is Posture Snap?'),
+                Text(
+                  'POSTURE\nSNAP',
+                  style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                          fontSize: 60,
+                          fontWeight: FontWeight.bold,
+                          height: 1.1,
+                          letterSpacing: 3,
+                          foreground: Paint()..shader = _linearGradient)),
+                  textAlign: TextAlign.center,
+                ),
                 SizedBox(
-                  width: 10,
+                  height: 20,
                 ),
                 h2(context,
                     'A mobile Application where YOU could evaluate your own ergonomics only by snapping picture'),
@@ -77,10 +93,10 @@ class AboutComponent extends StatelessWidget {
           textAlign: TextAlign.center,
           style: GoogleFonts.montserrat(
               textStyle: TextStyle(
-                  color: Color(0XFF0D6EFD),
-                  height: 1.8,
-                  fontSize: 20,
-                  )),
+            color: Color(0XFF0D6EFD),
+            height: 1.8,
+            fontSize: 20,
+          )),
         ));
   }
 

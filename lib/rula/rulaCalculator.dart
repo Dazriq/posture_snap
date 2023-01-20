@@ -52,8 +52,8 @@ String calculateRula(Result result, List<Pose> poses) {
     //TODO: change the right wrist to left
     wristFrontUp = Joint(
         pose.landmarks[PoseLandmarkType.leftWrist]!,
-        pose.landmarks[PoseLandmarkType.rightWrist]!,
-        pose.landmarks[PoseLandmarkType.rightIndex]!,
+        pose.landmarks[PoseLandmarkType.leftWrist]!,
+        pose.landmarks[PoseLandmarkType.leftIndex]!,
         'front',
         'up');
 
@@ -96,14 +96,10 @@ int checkRula(Result result, List<Joint>? jointListRula) {
   //TODO: check whether the neck is twisted or not
   //assume neck is twisted but not side bending
   neckScore = neckScore + 1;
-  print(
-      '-----------------------------------------------------------------------------------------------------------');
-  print('Neck Angle $neckAngle Score: $neckScore');
 
   //check trunk
   double trunkAngle = jointListRula[1].angle;
-  print(
-      '-----------------------------------------------------------------------------------------------------------');
+
   if (trunkAngle > 180 && trunkAngle < 200) trunkScore = trunkScore + 2;
   if (trunkAngle < 180 && trunkAngle > 160)
     trunkScore = trunkScore + 2;
@@ -129,9 +125,6 @@ int checkRula(Result result, List<Joint>? jointListRula) {
   if (kneeScore > 120 && kneeScore < 180)
     kneeScore = kneeScore + 2;
   else if (kneeScore > 90 && kneeScore < 120) kneeScore = kneeScore + 1;
-  print(
-      '-----------------------------------------------------------------------------------------------------------');
-  print('knee Angle $kneeAngle Score: $kneeScore');
 
   int scoreA = getScoreA(neckScore, trunkScore, kneeScore);
   print('Score A: $scoreA');
@@ -157,9 +150,6 @@ int checkRula(Result result, List<Joint>? jointListRula) {
   } else if (upperArmAngle > 190) {
     upperArmScore += 2;
   }
-  print(
-      '-----------------------------------------------------------------------------------------------------------');
-  print('upperArm Angle $upperArmAngle Score: $upperArmScore');
 
   //if shoulder raised
   //if upper arm is abducted
@@ -175,9 +165,6 @@ int checkRula(Result result, List<Joint>? jointListRula) {
     lowerArmScore += 1;
   else if (lowerArmAngle < 80) lowerArmScore += 2;
 
-  print(
-      '-----------------------------------------------------------------------------------------------------------');
-  print('lowerArm Angle $lowerArmAngle Score: $lowerArmScore');
   //DONE
 
   //check wrist
@@ -189,23 +176,17 @@ int checkRula(Result result, List<Joint>? jointListRula) {
     wristScore += 2;
   else if (wristAngle > 105) wristScore += 2;
   //DONE
-  print(
-      '-----------------------------------------------------------------------------------------------------------');
-  print('wrist Angle $wristAngle Score: $wristScore');
 
   int scoreB = getScoreB(upperArmScore, lowerArmScore, wristScore);
-  print('Score B: $scoreB');
 
   //we assume the coupling score is 0
   scoreB = scoreB + 0;
 
   //calculate the scorec
   int scoreC = getScoreC(scoreA, scoreB);
-  print('Score C: $scoreC');
 
   //we assume that the body parts are repeated in small range actions
   int rebaScore = scoreC + 1;
-  print('Reba Score: $rebaScore');
 
   //RESET THE Reba
   result.setRebaScore = rebaScore;
