@@ -136,25 +136,25 @@ class _ResultFlipState extends State<ResultFlip> {
 
     if (rebaScore != null) {
       if (rebaScore >= 1 && rebaScore <= 3) {
-        colorCode = 0XFFFCE700;
+        colorCode = 0XFF38E54D;
         score = 1;
         message = 'You have an excellent posture';
-        title += 'EXCELLENT';
+        title = 'EXCELLENT';
       } else if (rebaScore >= 4 && rebaScore <= 7) {
         colorCode = 0XFFFCE700;
         score = 2;
         message = 'You have a good posture';
-        title += 'GOOD';
+        title = 'GOOD';
       } else if (rebaScore >= 8 && rebaScore <= 10) {
         colorCode = 0XFFFF7000;
         score = 3;
         message = 'You have a fair posture';
-        title += 'FAIR';
+        title = 'FAIR';
       } else if (rebaScore >= 11) {
         colorCode = 0XFFDC3535;
         score = 4;
         message = 'Please fix your posture';
-        title += 'POOR';
+        title = 'POOR';
       }
     }
 

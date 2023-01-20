@@ -178,6 +178,7 @@ class _CameraViewState extends State<CameraView> {
                                         children: <Widget>[
                                           IconButton(
                                             icon: Icon(Icons.arrow_back),
+                                            color: Colors.white,
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
@@ -275,18 +276,6 @@ class _CameraViewState extends State<CameraView> {
                 SizedBox(
                   height: 90,
                 ),
-                //if (_image != null) {
-                //  setState(() {
-                //    isFabVisible = true;
-                //  });
-                //}
-
-                if (_image != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 100),
-                    child: Text(
-                        '${_path == null ? '' : ''}\n\n${widget.result.toString() ?? ''}'),
-                  ),
               ],
             ),
           ),
@@ -301,6 +290,62 @@ class _CameraViewState extends State<CameraView> {
     double lowerArmAngle = widget.result!.lowerArmAngle!;
     double wristAngle = widget.result!.wristAngle!;
     double trunkAngle = widget.result!.trunkAngle!;
+    double kneeAngle = widget.result!.kneeAngle!;
+
+    int neckScore = widget.result!.neckScore!;
+    int upperArmScore = widget.result!.upperArmScore!;
+    int lowerArmScore = widget.result!.lowerArmScore!;
+    int wristScore = widget.result!.wristScore!;
+    int trunkScore = widget.result!.trunkScore!;
+    int kneeScore = widget.result!.kneeScore!;
+
+    String neckResult = 'P0OR';
+    String trunkResult = 'P0OR';
+    String upperArmResult = 'POOR';
+    String lowerArmResult = 'POOR';
+    String wristResult = 'POOR';
+    String kneeResult = 'POOR';
+
+    if (neckScore >= 4)
+      neckResult = 'POOR';
+    else if (neckScore == 1)
+      neckResult = 'EXCELLENT';
+    else if (neckScore == 2)
+      neckResult = 'GOOD';
+    else if (neckScore == 3) neckResult = 'FAIR';
+
+    if (trunkScore >= 1 && trunkScore <= 2)
+      trunkResult = 'EXCELLENT';
+    else if (trunkScore == 3)
+      trunkResult = 'GOOD';
+    else if (trunkScore == 4)
+      trunkResult = 'FAIR';
+    else if (trunkScore >= 5) trunkResult = 'POOR';
+
+    
+    if (kneeScore == 2 || kneeScore == 1)
+      kneeResult= 'GOOD';
+    else if (kneeScore == 3)
+      kneeResult= 'FAIR';
+    else if (kneeScore >= 4) kneeResult= 'POOR';
+
+    if (upperArmScore >= 1 && upperArmScore <= 2)
+      upperArmResult = 'EXCELLENT';
+    else if (upperArmScore == 3)
+      upperArmResult = 'GOOD';
+    else if (upperArmScore >= 4 && upperArmScore <= 5)
+      upperArmResult = 'FAIR';
+    else if (upperArmScore >= 6) upperArmResult = 'POOR';
+
+    if (lowerArmScore == 1)
+      lowerArmResult = 'GOOD';
+    else if (lowerArmScore == 2) lowerArmResult = 'FAIR';
+
+    if (wristScore == 1)
+      wristResult = 'GOOD';
+    else if (wristScore == 2)
+      wristResult = 'FAIR';
+    else if (wristScore == 3) wristResult = 'POOR';
 
     return Container(
         width: MediaQuery.of(context).size.width * 0.95,
@@ -310,17 +355,17 @@ class _CameraViewState extends State<CameraView> {
               CardFlip(
                   icon: 'neck.png',
                   title: 'NECK',
-                  result: 'FAIR',
+                  result: neckResult,
                   angle: double.parse((neckAngle).toStringAsFixed(2))),
               CardFlip(
                   icon: 'shoulder.png',
                   title: 'SHOULDER',
-                  result: 'EXCELLENT',
+                  result: upperArmResult,
                   angle: double.parse((upperArmAngle).toStringAsFixed(2))),
               CardFlip(
                   icon: 'arm.png',
                   title: 'ARM',
-                  result: 'GOOD',
+                  result: lowerArmResult,
                   angle: double.parse((lowerArmAngle).toStringAsFixed(2))),
             ]),
             SizedBox(height: 10),
@@ -328,20 +373,18 @@ class _CameraViewState extends State<CameraView> {
               CardFlip(
                   icon: 'wrist.png',
                   title: 'WRIST',
-                  result: 'EXCELLENT',
-                  angle: double.parse(
-                      (wristAngle).toStringAsFixed(2))),
+                  result: wristResult,
+                  angle: double.parse((wristAngle).toStringAsFixed(2))),
               CardFlip(
                   icon: 'trunk.png',
                   title: 'TRUNK',
-                  result: 'GOOD',
-                  angle: double.parse(
-                      (trunkAngle).toStringAsFixed(2))),
+                  result: trunkResult,
+                  angle: double.parse((trunkAngle).toStringAsFixed(2))),
               CardFlip(
-                  icon: 'fullBody.png',
-                  title: 'OTHERS',
-                  result: 'POOR',
-                  angle: 120.342),
+                  icon: 'leg.png',
+                  title: 'LEG',
+                  result: kneeResult,
+                  angle: double.parse((kneeAngle).toStringAsFixed(2))),
             ]),
           ],
         ));

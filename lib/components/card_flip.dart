@@ -23,7 +23,7 @@ class _CardFlipState extends State<CardFlip> {
     //convert angle to 2 decimal places and string
     num angleRoundOff = num.parse(widget.angle.toStringAsFixed(1));
     String angleRoundOffString = ' ' + angleRoundOff.toString() + '°';
-
+  
     int colorCode = 0XFF38E54D;
     switch (widget.result) {
       case 'EXCELLENT':
