@@ -6,6 +6,7 @@ import 'package:ergo_snap/components/rounded_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ergo_snap/components/rounded_button.dart';
+import 'package:flutter/widgets.dart';
 
 class AboutComponent extends StatelessWidget {
   AboutComponent({
@@ -17,11 +18,11 @@ class AboutComponent extends StatelessWidget {
   final Size size;
   final double defaultLoginSize;
   final Shader _linearGradient = const LinearGradient(
-      colors: [Color(0XFFFF3B9D), Color(0XFFa25ce0)],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight,
-      stops: [0.3, 0.7],
-    ).createShader(const Rect.fromLTWH(0.0, 0.0, 320.0, 80.0));
+    colors: [Color(0XFFFF3B9D), Color(0XFFa25ce0)],
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
+    stops: [0.3, 0.7],
+  ).createShader(const Rect.fromLTWH(0.0, 0.0, 320.0, 80.0));
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +53,17 @@ class AboutComponent extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
-                h2(context,
-                    'A mobile Application where YOU could evaluate your own ergonomics only by snapping picture'),
-                SizedBox(height: 20),
-                h1(context, 'How Do we do it'),
+                Image(
+                  image: AssetImage('assets/logo.png'),
+                  width:  300,
+                ),
+                SizedBox(height: 50),
+                h3(context,
+                    'A mobile application where you could evaluate your own ergonomics by only snapping picture. This Application was made by Dazriq Iqramie (dazriqiqramie@gmail.com) for Bachelor of Science Computer (Computer System) final year project. '),
                 SizedBox(height: 10),
+                h3Center(context, 'Sem 2 2022/2023'),
                 SizedBox(
                   height: 30,
                 ),
@@ -87,7 +92,7 @@ class AboutComponent extends StatelessWidget {
 
   Widget h2(context, String title) {
     return Container(
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: Text(
           title,
           textAlign: TextAlign.center,
@@ -95,7 +100,38 @@ class AboutComponent extends StatelessWidget {
               textStyle: TextStyle(
             color: Color(0XFF0D6EFD),
             height: 1.8,
-            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            fontSize: 24,
+          )),
+        ));
+  }
+
+  Widget h3(context, String title) {
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Text(
+          title,
+          textAlign: TextAlign.justify,
+          style: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+            color: Colors.black54,
+            height: 1.8,
+            fontSize: 12,
+          )),
+        ));
+  }
+
+  Widget h3Center(context, String title) {
+    return Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+            color: Colors.black54,
+            height: 1.8,
+            fontSize: 15,
           )),
         ));
   }
