@@ -248,7 +248,7 @@ class _CameraViewState extends State<CameraView> {
                                                   .width *
                                               0.8,
                                           child: Text(
-                                            'Disclaimer : This application is not connected to a server, hence your privacy is protected.',
+                                            'Make sure that you take picture in the orientation as shown as diagram above\nDisclaimer : This application is not connected to a server, hence your privacy is protected.',
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.montserrat(
                                                 textStyle: TextStyle(
@@ -268,14 +268,28 @@ class _CameraViewState extends State<CameraView> {
                 ),
                 //TODO: DO THE JOINTS ANALYSIS
 
-                if (_image != null) ResultFlip(result: widget.result),
+                _image != null && widget.result != null
+                    ? ResultFlip(result: widget.result)
+                    : SizedBox(
+                        height: 0,
+                      ),
                 SizedBox(
                   height: 20,
                 ),
-                if (_image != null) resultIconsSquared(widget.result!),
+                _image != null && widget.result != null
+                    ? resultIconsSquared(widget.result!)
+                    : SizedBox(
+                        height: 0,
+                      ),
+                _image != null && widget.result == null
+                    ? failedResult()
+                    : SizedBox(
+                        height: 0,
+                      ),
                 SizedBox(
                   height: 90,
                 ),
+                
               ],
             ),
           ),
@@ -283,6 +297,72 @@ class _CameraViewState extends State<CameraView> {
       ),
     );
   }
+
+  Widget failedResult() {
+        return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: 110,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Color(0XFFDC3535),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: Offset(0, 4), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+            Icon(
+              Icons.sentiment_very_dissatisfied_outlined,
+              size: 90,
+              color: Colors.white,
+            ),
+          SizedBox(
+            width: 10,
+          ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'NO RESULT',
+                  style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2)),
+                ),
+                FittedBox(
+                  fit: BoxFit.fill,
+                  child: Text(
+                    'No pose found',
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                    )),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
+    );
+  }
+
 
   Widget resultIconsSquared(Result result) {
     double neckAngle = widget.result!.neckAngle!;
@@ -322,12 +402,11 @@ class _CameraViewState extends State<CameraView> {
       trunkResult = 'FAIR';
     else if (trunkScore >= 5) trunkResult = 'POOR';
 
-    
     if (kneeScore == 2 || kneeScore == 1)
-      kneeResult= 'GOOD';
+      kneeResult = 'GOOD';
     else if (kneeScore == 3)
-      kneeResult= 'FAIR';
-    else if (kneeScore >= 4) kneeResult= 'POOR';
+      kneeResult = 'FAIR';
+    else if (kneeScore >= 4) kneeResult = 'POOR';
 
     if (upperArmScore >= 1 && upperArmScore <= 2)
       upperArmResult = 'EXCELLENT';

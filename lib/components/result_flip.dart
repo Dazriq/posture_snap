@@ -18,7 +18,6 @@ class _ResultFlipState extends State<ResultFlip> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     int colorCode = 0XFF38E54D;
     int? rebaScore = widget.result!.rebaScore;
 
