@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui' as ui;
+import 'package:ergo_snap/vision_detector_views/pose_detector_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:camera/camera.dart';
@@ -86,11 +87,8 @@ class _CameraViewState extends State<CameraView> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               onPressed: () {
-                setState(() {
-                  _image = null;
-                  _path = null;
-                  isFabVisible = false;
-                });
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => PoseDetectorView()));
               },
               label: Text(
                 'Re-Assess',
@@ -289,7 +287,6 @@ class _CameraViewState extends State<CameraView> {
                 SizedBox(
                   height: 90,
                 ),
-                
               ],
             ),
           ),
@@ -299,7 +296,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget failedResult() {
-        return Container(
+    return Container(
       width: MediaQuery.of(context).size.width * 0.9,
       height: 110,
       padding: EdgeInsets.all(10),
@@ -317,11 +314,11 @@ class _CameraViewState extends State<CameraView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-            Icon(
-              Icons.sentiment_very_dissatisfied_outlined,
-              size: 90,
-              color: Colors.white,
-            ),
+          Icon(
+            Icons.sentiment_very_dissatisfied_outlined,
+            size: 90,
+            color: Colors.white,
+          ),
           SizedBox(
             width: 10,
           ),
@@ -362,7 +359,6 @@ class _CameraViewState extends State<CameraView> {
       ),
     );
   }
-
 
   Widget resultIconsSquared(Result result) {
     double neckAngle = widget.result!.neckAngle!;

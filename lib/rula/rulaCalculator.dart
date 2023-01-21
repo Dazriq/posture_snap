@@ -101,7 +101,7 @@ int checkRula(Result result, List<Joint>? jointListRula) {
   double trunkAngle = jointListRula[1].angle;
 
   if (trunkAngle > 180 && trunkAngle < 200) trunkScore = trunkScore + 2;
-  if (trunkAngle < 180 && trunkAngle > 160)
+  else if (trunkAngle < 180 && trunkAngle > 160)
     trunkScore = trunkScore + 2;
   else if (trunkScore == 180)
     trunkScore = trunkScore + 1;
