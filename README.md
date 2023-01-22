@@ -8,4 +8,8 @@
 # Built With
 FLUTTER
 
+# Preview 
+<img width="1000" alt="homepage" src="screenshots/home_page.png">
+
+
 
