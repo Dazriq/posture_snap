@@ -87,20 +87,20 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       _customPaint = CustomPaint(painter: painter);
 
       if (checkNull(poses) == true) {
-      Result result = new Result(
-          neckAngle: 0,
-          neckScore: 0,
-          rebaScore: 0,
-          trunkScore: 0,
-          trunkAngle: 0,
-          kneeScore: 0,
-          kneeAngle: 0,
-          upperArmScore: 0,
-          upperArmAngle: 0,
-          lowerArmScore: 0,
-          lowerArmAngle: 0,
-          wristScore: 0,
-          wristAngle: 0);
+        Result result = new Result(
+            neckAngle: 0,
+            neckScore: 0,
+            rebaScore: 0,
+            trunkScore: 0,
+            trunkAngle: 0,
+            kneeScore: 0,
+            kneeAngle: 0,
+            upperArmScore: 0,
+            upperArmAngle: 0,
+            lowerArmScore: 0,
+            lowerArmAngle: 0,
+            wristScore: 0,
+            wristAngle: 0);
         _text =
             'Poses found \n${calculateRula(result, poses)} \n ${inputImage}';
         _result = result;
@@ -119,7 +119,8 @@ bool checkNull(List<Pose> poses) {
   double totalLikelihood = 0;
 
   for (final pose in poses) {
-    double? leftShoulder = pose.landmarks[PoseLandmarkType.leftShoulder]!.likelihood;
+    double? leftShoulder =
+        pose.landmarks[PoseLandmarkType.leftShoulder]!.likelihood;
     double? leftEar = pose.landmarks[PoseLandmarkType.leftEar]!.likelihood;
     double? leftHip = pose.landmarks[PoseLandmarkType.leftHip]!.likelihood;
     double? leftAnkle = pose.landmarks[PoseLandmarkType.leftAnkle]!.likelihood;
@@ -128,15 +129,48 @@ bool checkNull(List<Pose> poses) {
     double? leftWrist = pose.landmarks[PoseLandmarkType.leftWrist]!.likelihood;
     double? leftIndex = pose.landmarks[PoseLandmarkType.leftIndex]!.likelihood;
 
+    print(
+        '$leftShoulder, $leftEar, $leftHip, $leftAnkle, $leftKnee, $leftElbow, $leftWrist, $leftIndex');
 
-    totalLikelihood = leftShoulder + leftEar + leftHip + leftAnkle + leftKnee + leftElbow + leftWrist + leftIndex;
-
-    totalLikelihood = totalLikelihood/8;
-    print(totalLikelihood);
-    if (totalLikelihood < 0.7) {
+    if (leftShoulder < 0.7) {
+      returnValue = false;
+    }
+    if (leftEar < 0.7) {
+      returnValue = false;
+    }
+    if (leftHip < 0.7) {
+      returnValue = false;
+    }
+    if (leftAnkle < 0.7) {
+      returnValue = false;
+    }
+    if (leftKnee < 0.7) {
+      returnValue = false;
+    }
+    if (leftElbow < 0.7) {
+      returnValue = false;
+    }
+    if (leftWrist < 0.7) {
+      returnValue = false;
+    }
+    if (leftIndex < 0.7) {
       returnValue = false;
     }
 
+    // totalLikelihood = leftShoulder +
+    //     leftEar +
+    //     leftHip +
+    //     leftAnkle +
+    //     leftKnee +
+    //     leftElbow +
+    //     leftWrist +
+    //     leftIndex;
+
+    // totalLikelihood = totalLikelihood / 8;
+    // print(totalLikelihood);
+    // if (totalLikelihood < 0.7) {
+    //   returnValue = false;
+    // }
   }
   print(totalLikelihood);
   print(returnValue);
