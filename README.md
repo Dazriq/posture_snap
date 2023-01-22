@@ -6,7 +6,13 @@
 </div>
 
 # Built With
-FLUTTER
+
+ ![6e19fee6b47b36ca613f](https://user-images.githubusercontent.com/51942747/213941401-ed1d188c-a719-4bb1-8774-05e4765503bb.png)
+
+
+
+
+
 
 # Preview 
 <div>
@@ -16,8 +22,6 @@ FLUTTER
  <img width="150" alt="about" src="screenshots/about_page.jpg">
  <img width="150" alt="learn" src="screenshots/learn_page.jpg">
 </div>
-
-
 
 
 
