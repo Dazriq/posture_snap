@@ -9,7 +9,15 @@
 FLUTTER
 
 # Preview 
-<img width="1000" alt="homepage" src="screenshots/home_page.png">
+<div>
+ <img width="150" alt="home" src="screenshots/home_page.jpg">
+ <img width="150" alt="camera" src="screenshots/camera_page.jpg">
+ <img width="150" alt="result" src="screenshots/result_page.jpg">
+ <img width="150" alt="about" src="screenshots/about_page.jpg">
+ <img width="150" alt="learn" src="screenshots/learn_page.jpg">
+</div>
+
+
 
 
 
