@@ -133,11 +133,12 @@ bool checkNull(List<Pose> poses) {
 
     totalLikelihood = totalLikelihood/8;
     print(totalLikelihood);
-    if (totalLikelihood < 0.65) {
+    if (totalLikelihood < 0.7) {
       returnValue = false;
     }
 
   }
+  print(totalLikelihood);
   print(returnValue);
   return returnValue;
 }

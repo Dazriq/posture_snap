@@ -151,6 +151,8 @@ int checkRula(Result result, List<Joint>? jointListRula) {
     upperArmScore += 2;
   }
 
+  //we assume upper arm is abducted
+  upperArmScore+= 1;
   //if shoulder raised
   //if upper arm is abducted
   //if arm is supported or person leaning

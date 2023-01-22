@@ -246,7 +246,7 @@ class _CameraViewState extends State<CameraView> {
                                                   .width *
                                               0.8,
                                           child: Text(
-                                            'Make sure that you take picture in the orientation as shown as diagram above\nDisclaimer : This application is not connected to a server, hence your privacy is protected.',
+                                            'Make sure that you take picture from the angle as the illustration above\nDisclaimer : This application is not connected to a server, hence your privacy is protected.',
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.montserrat(
                                                 textStyle: TextStyle(
